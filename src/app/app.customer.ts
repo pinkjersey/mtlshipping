@@ -1,4 +1,4 @@
 export class Customer {
-  id: string;
-  name: string;
+  entityID: string;
+  customerName: string;
 }
