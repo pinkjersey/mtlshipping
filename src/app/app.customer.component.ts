@@ -17,13 +17,25 @@ export class CustomersComponent implements OnInit {
     this.selectedCustomer = customer;
   }
   getCustomers(): void {
-    this.customerService.getCustomers().then(inputCustomers => this.customers = inputCustomers)
+    this.customerService.getCustomers()
+      .subscribe(customers => this.customers = customers);
   }
   ngOnInit(): void {
     this.getCustomers();
   }
   gotoDetail(): void {
     this.router.navigate(['/detail', this.selectedCustomer.entityID])
+  }
+  add(customerName: string): void {
+    customerName = customerName.trim();
+    if (!customerName) { return; }
+    const c = new Customer();
+    c.customerName = customerName;
+    c.entityID = '';
+    this.customerService.addCustomer(c)
+      .subscribe(customer => {
+        this.customers.push(customer);
+      });
   }
 }
 

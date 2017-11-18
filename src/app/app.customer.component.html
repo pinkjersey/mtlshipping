@@ -1,6 +1,16 @@
 <!--The whole content below can be removed with the new code.-->
 <div>
   <h2>My Customers</h2>
+  <div>
+    <label>Customer name:
+      <input #customerName />
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button (click)="add(customerName.value); customerName.value=''">
+      add
+    </button>
+  </div>
+
   <ul class="customers">
     <li *ngFor="let customer of customers" (click)="onSelect(customer)" [class.selected]="customer === selectedCustomer">
       <span class="badge">{{customer.entityID}}</span> {{customer.customerName}}
