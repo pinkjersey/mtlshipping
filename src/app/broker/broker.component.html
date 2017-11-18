@@ -1,0 +1,24 @@
+<div>
+  <h2>Brokers</h2>
+  <div>
+    <label>Broker name:
+      <input #brokerName />
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button (click)="add(brokerName.value); brokerName.value=''">
+      add
+    </button>
+  </div>
+
+  <ul class="broker">
+    <li *ngFor="let broker of brokers" (click)="onSelect(broker)" [class.selected]="broker === selectedBroker">
+      <span class="badge">{{broker.entityID}}</span> {{broker.brokerName}}
+    </li>
+  </ul>
+  <div *ngIf="selectedBroker">
+    <h2>
+      {{selectedBroker.name}} is selected
+    </h2>
+    <button (click)="gotoDetail()">View Details</button>
+  </div>
+</div>

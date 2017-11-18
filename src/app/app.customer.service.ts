@@ -6,16 +6,19 @@ import {Observable} from 'rxjs/Observable';
 import {catchError, tap} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
 import { MessageService } from './message.service';
+import { ServiceBase } from './serviceBase'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
-export class CustomerService {
+export class CustomerService extends ServiceBase {
   private customerUrl = 'http://localhost:8080/customers';  // URL to web api
   constructor(private http: HttpClient,
-              private messageService: MessageService) {}
+              messageService: MessageService) {
+    super(messageService, 'CustomerService');
+  }
 
   /** GET customers from the server */
   getCustomers(): Observable<Customer[]> {
@@ -38,29 +41,5 @@ export class CustomerService {
       tap((customerResponse: Customer) => this.log(`added customer w/ id=${customerResponse.entityID}`)),
       catchError(this.handleError<Customer>('addCustomer'))
     );
-  }
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
-
-  /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-    this.messageService.add('CustomerService: ' + message);
   }
 }

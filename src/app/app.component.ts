@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
   <nav>
     <a routerLink="/dashboard">Dashboard</a>
     <a routerLink="/customers">Customers</a>
+    <a routerLink="/brokers">Brokers</a>
   </nav>
   <router-outlet></router-outlet>
   `
