@@ -10,14 +10,14 @@
     </button>
   </div>
 
-  <ul class="broker">
+  <ul class="brokers">
     <li *ngFor="let broker of brokers" (click)="onSelect(broker)" [class.selected]="broker === selectedBroker">
       <span class="badge">{{broker.entityID}}</span> {{broker.brokerName}}
     </li>
   </ul>
   <div *ngIf="selectedBroker">
     <h2>
-      {{selectedBroker.name}} is selected
+      {{selectedBroker.brokerName}} is selected
     </h2>
     <button (click)="gotoDetail()">View Details</button>
   </div>
