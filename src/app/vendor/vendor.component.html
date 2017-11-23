@@ -1,0 +1,24 @@
+<div>
+  <h2>Vendors</h2>
+  <div>
+    <label>Vendor name:
+      <input #vendorName />
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button (click)="add(vendorName.value); vendorName.value=''">
+      add
+    </button>
+  </div>
+
+  <ul class="vendors">
+    <li *ngFor="let vendor of vendors" (click)="onSelect(vendor)" [class.selected]="vendor === selectedVendor">
+      <span class="badge">{{vendor.entityID}}</span> {{vendor.vendorName}}
+    </li>
+  </ul>
+  <div *ngIf="selectedVendor">
+    <h2>
+      {{selectedVendor.vendorName}} is selected
+    </h2>
+    <button (click)="gotoDetail()">View Details</button>
+  </div>
+</div>

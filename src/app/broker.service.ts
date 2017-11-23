@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MessageService } from './message.service';
 import {Observable} from 'rxjs/Observable';
 import {Broker} from './broker/broker';
-import {of} from 'rxjs/observable/of';
 import {catchError, tap} from 'rxjs/operators';
 import {ServiceBase} from './serviceBase';
 

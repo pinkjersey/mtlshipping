@@ -12,6 +12,8 @@ import {CustomerService} from './app.customer.service';
 import { MessageService } from './message.service';
 import { BrokerComponent } from './broker/broker.component';
 import {BrokerService} from "./broker.service";
+import { VendorComponent } from './vendor/vendor.component';
+import {VendorService} from "./vendor.service";
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import {BrokerService} from "./broker.service";
     CustomersComponent,
     CustomerDetailComponent,
     DashboardComponent,
-    BrokerComponent
+    BrokerComponent,
+    VendorComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,10 @@ import {BrokerService} from "./broker.service";
         component: CustomerDetailComponent
       },
       {
+        path: 'vendors',
+        component: VendorComponent
+      },
+      {
         path: 'brokers',
         component: BrokerComponent
       },
@@ -49,7 +56,7 @@ import {BrokerService} from "./broker.service";
       }
     ])
   ],
-  providers: [CustomerService, MessageService, BrokerService],
+  providers: [CustomerService, MessageService, BrokerService, VendorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
