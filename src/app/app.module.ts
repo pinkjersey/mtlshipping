@@ -14,6 +14,9 @@ import { BrokerComponent } from './broker/broker.component';
 import {BrokerService} from "./broker.service";
 import { VendorComponent } from './vendor/vendor.component';
 import {VendorService} from "./vendor.service";
+import { DesignComponent } from './design/design.component';
+import {DesignService} from "./design.service";
+import { DesignDetailComponent } from './design-detail/design-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import {VendorService} from "./vendor.service";
     CustomerDetailComponent,
     DashboardComponent,
     BrokerComponent,
-    VendorComponent
+    VendorComponent,
+    DesignComponent,
+    DesignDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +38,14 @@ import {VendorService} from "./vendor.service";
         path: '',
         redirectTo: '/dashboard',
         pathMatch: 'full'
+      },
+      {
+        path: 'designs',
+        component: DesignComponent
+      },
+      {
+        path: 'design-detail/:id',
+        component: DesignDetailComponent
       },
       {
         path: 'customers',
@@ -56,7 +69,8 @@ import {VendorService} from "./vendor.service";
       }
     ])
   ],
-  providers: [CustomerService, MessageService, BrokerService, VendorService],
+  providers: [CustomerService, MessageService, BrokerService, VendorService,
+  DesignService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

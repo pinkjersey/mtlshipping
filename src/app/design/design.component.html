@@ -1,0 +1,24 @@
+<div>
+  <h2>Designs</h2>
+  <div>
+    <label>Design name:
+      <input #designName />
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button (click)="add(designName.value); designName.value=''">
+      add
+    </button>
+  </div>
+
+  <ul class="designs">
+    <li *ngFor="let design of designs" (click)="onSelect(design)" [class.selected]="design === selectedDesign">
+      <span class="badge">{{design.entityID}}</span> {{design.designName}}
+    </li>
+  </ul>
+  <div *ngIf="selectedDesign">
+    <h2>
+      {{selectedDesign.designName}} is selected
+    </h2>
+    <button (click)="gotoDetail()">View Details</button>
+  </div>
+</div>
