@@ -6,17 +6,21 @@ import { RouterModule } from '@angular/router'
 
 import { AppComponent } from './app.component';
 import { CustomersComponent } from './app.customer.component';
-import {CustomerDetailComponent} from './app.customer-detail.component';
+import {CustomerDetailComponent} from './customer-detail/customer-detail.component';
 import {DashboardComponent} from './app.dashboard.component';
 import {CustomerService} from './app.customer.service';
 import { MessageService } from './message.service';
 import { BrokerComponent } from './broker/broker.component';
-import {BrokerService} from "./broker.service";
+import {BrokerService} from './broker.service';
 import { VendorComponent } from './vendor/vendor.component';
-import {VendorService} from "./vendor.service";
+import {VendorService} from './vendor.service';
 import { DesignComponent } from './design/design.component';
-import {DesignService} from "./design.service";
+import {DesignService} from './design.service';
 import { DesignDetailComponent } from './design-detail/design-detail.component';
+import { PurchaseOrderDetailComponent } from './purchase-order-detail/purchase-order-detail.component';
+import {PurchaseOrderService} from './purchase-order.service';
+import { DescriptionPipe } from './description.pipe';
+import { ParentDescriptionPipe } from './parent-description.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,10 @@ import { DesignDetailComponent } from './design-detail/design-detail.component';
     BrokerComponent,
     VendorComponent,
     DesignComponent,
-    DesignDetailComponent
+    DesignDetailComponent,
+    PurchaseOrderDetailComponent,
+    DescriptionPipe,
+    ParentDescriptionPipe
   ],
   imports: [
     BrowserModule,
@@ -52,12 +59,16 @@ import { DesignDetailComponent } from './design-detail/design-detail.component';
         component: CustomersComponent
       },
       {
-        path: 'detail/:id',
+        path: 'customer-detail/:id',
         component: CustomerDetailComponent
       },
       {
         path: 'vendors',
         component: VendorComponent
+      },
+      {
+        path: 'purchase-order-detail/:id',
+        component: PurchaseOrderDetailComponent
       },
       {
         path: 'brokers',
@@ -70,7 +81,7 @@ import { DesignDetailComponent } from './design-detail/design-detail.component';
     ])
   ],
   providers: [CustomerService, MessageService, BrokerService, VendorService,
-  DesignService],
+  DesignService, PurchaseOrderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

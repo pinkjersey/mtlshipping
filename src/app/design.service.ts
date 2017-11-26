@@ -5,7 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {Design} from './design/design';
 import {catchError, tap} from 'rxjs/operators';
 import {ServiceBase} from './serviceBase';
-import {DesignColor} from "./design-detail/design-detail";
+import {DesignColor} from './design-detail/design-detail';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -24,6 +24,14 @@ export class DesignService extends ServiceBase {
       .pipe(
         tap(designs => this.log(`fetched designs`)),
         catchError(this.handleError('getDesigns', []))
+      );
+  }
+
+  getAllColors(): Observable<DesignColor[]> {
+    return this.http.get<DesignColor[]>(this.urlForColors)
+      .pipe(
+        tap(designColors => this.log(`fetched design colors`)),
+        catchError(this.handleError('getAllColors', []))
       );
   }
 

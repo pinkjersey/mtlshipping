@@ -1,0 +1,47 @@
+<div>
+  <div><label>ID: </label>{{purchaseOrder.entityID}}</div>
+  <div>
+    <label>PO Date: </label>{{purchaseOrder.date | date }}
+  </div>
+  <div>
+    <label>Customer PO: </label>{{purchaseOrder.customerPO}}
+  </div>
+
+  <div>
+    <label>Design:
+      <select (change)="getColors($event)">
+        <option *ngFor="let d of designs; let i=index"
+                [value]="d.entityID">
+          {{d.designName}}
+        </option>
+      </select>
+    </label>
+    <label *ngIf="designID">Color:
+      <select [(ngModel)]="selectedDesignColor">
+        <option *ngFor="let c of colors" [ngValue]="c.entityID">{{c.color}}</option>
+      </select>
+    </label>
+    <label>Vendor:
+      <select [(ngModel)]="selectedVendor">
+        <option *ngFor="let v of vendors" [ngValue]="v.entityID">{{v.vendorName}}</option>
+      </select>
+    </label>
+    <label>Ordered Yards:
+      <input [(ngModel)]="orderedYards" type="number" step="0.01" style="text-align:right;">
+    </label>
+    <label>LDP in cents:
+      <input [(ngModel)]="LDP" type="number" style="text-align:right;">
+    </label>
+    <button (click)="addItem();">
+      add
+    </button>
+  </div>
+  <ul class="items">
+    <li *ngFor="let item of items">
+      <span class="badge">{{item.entityID}}</span>
+      {{item.designColorID | parentDescription: "DesignColor":"designID":allColors:designs}},
+      {{item.designColorID | description:"DesignColor":allColors}}, {{item.orderedYards}} yards at {{item.ldp}} cents
+    </li>
+  </ul>
+
+</div>

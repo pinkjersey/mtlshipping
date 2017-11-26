@@ -7,6 +7,7 @@ import {catchError, tap} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
 import { MessageService } from './message.service';
 import { ServiceBase } from './serviceBase'
+import {PurchaseOrder} from './purchase-order-detail/purchaseOrder';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,6 +16,7 @@ const httpOptions = {
 @Injectable()
 export class CustomerService extends ServiceBase {
   private customerUrl = 'http://localhost:8080/customers';  // URL to web api
+  private urlForPurchaseOrders = 'http://localhost:8080/purchaseOrders'
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'CustomerService');
@@ -26,6 +28,15 @@ export class CustomerService extends ServiceBase {
       .pipe(
         tap(heroes => this.log(`fetched customers`)),
         catchError(this.handleError('getCustomers', []))
+      );
+  }
+
+  getCustomerPOs(id: string): Observable<PurchaseOrder[]> {
+    const url = `${this.customerUrl}/${id}/purchaseOrders`;
+    return this.http.get<PurchaseOrder[]>(url)
+      .pipe(
+        tap(designColors => this.log(`fetched customer purchase orders`)),
+        catchError(this.handleError('getCustomerPOs', []))
       );
   }
   /** GET customer by id. Will 404 if id not found */
@@ -40,6 +51,13 @@ export class CustomerService extends ServiceBase {
     return this.http.post<Customer>(this.customerUrl, customer, httpOptions).pipe(
       tap((customerResponse: Customer) => this.log(`added customer w/ id=${customerResponse.entityID}`)),
       catchError(this.handleError<Customer>('addCustomer'))
+    );
+  }
+
+  addPurchaseOrder(po: PurchaseOrder): Observable<PurchaseOrder> {
+    return this.http.post<PurchaseOrder>(this.urlForPurchaseOrders, po, httpOptions).pipe(
+      tap((response: PurchaseOrder) => this.log(`added po  w/ id=${response.entityID}`)),
+      catchError(this.handleError<PurchaseOrder>('addPurchaseOrder'))
     );
   }
 }

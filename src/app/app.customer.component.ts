@@ -24,7 +24,7 @@ export class CustomersComponent implements OnInit {
     this.getCustomers();
   }
   gotoDetail(): void {
-    this.router.navigate(['/detail', this.selectedCustomer.entityID])
+    this.router.navigate(['/customer-detail', this.selectedCustomer.entityID])
   }
   add(customerName: string): void {
     customerName = customerName.trim();

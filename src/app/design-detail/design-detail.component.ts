@@ -3,7 +3,8 @@ import { ActivatedRoute, ParamMap} from '@angular/router';
 import { Location } from '@angular/common';
 import { DesignService } from '../design.service';
 import { Design } from '../design/design';
-import {DesignColor} from "./design-detail";
+import {DesignColor} from './design-detail';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-design-detail',
