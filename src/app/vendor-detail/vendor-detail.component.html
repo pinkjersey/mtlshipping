@@ -1,10 +1,18 @@
 <div *ngIf="vendor">
+<h2>{{vendor.vendorName}}</h2>
+<nav>
+  <a routerLink="ourPOs">Our Purchase Orders</a>
+  <a routerLink="vendorInvoices">Vendor Invoices</a>
+</nav>
+<router-outlet></router-outlet>
+</div>
+<!--
+<div *ngIf="vendor">
 <h2>{{vendor.vendorName}} Purchase Orders</h2>
 <div>
   <label>Our Purchase Order ID:
     <input #poID />
   </label>
-  <!-- (click) passes input value to add() and then clears the input -->
   <button (click)="addPurchaseOrder(poID.value); poID.value=''">
     add
   </button>
@@ -21,3 +29,4 @@
   <button (click)="gotoDetail()">View Details</button>
 </div>
 </div>
+-->

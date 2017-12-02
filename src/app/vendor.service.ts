@@ -6,7 +6,8 @@ import {Vendor} from './vendor/vendor';
 import { Item } from './purchase-order-detail/item'
 import {catchError, tap} from 'rxjs/operators';
 import {ServiceBase} from './serviceBase';
-import {OurPurchaseOrder} from "./our-purchase-order-detail/ourPurchaseOrder";
+import {OurPurchaseOrder} from './our-purchase-order-detail/ourPurchaseOrder';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,12 +15,20 @@ const httpOptions = {
 
 @Injectable()
 export class VendorService extends ServiceBase {
+  private vendor = new BehaviorSubject<Vendor>(null);
+  public vendorStream = this.vendor.asObservable();
   private url = 'http://localhost:8080/vendors';  // URL to web ap
   private urlForPurchaseOrders = 'http://localhost:8080/ourPurchaseOrders';
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'VendorService');
   }
+
+  broadcastVendorChange(nv: Vendor) {
+    console.log('broadcasting vendor change')
+    this.vendor.next(nv);
+  }
+
   /** GET vendors from the server */
   getVendors(): Observable<Vendor[]> {
     return this.http.get<Vendor[]>(this.url)

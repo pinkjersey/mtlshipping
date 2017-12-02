@@ -23,6 +23,8 @@ import { DescriptionPipe } from './description.pipe';
 import { ParentDescriptionPipe } from './parent-description.pipe';
 import { VendorDetailComponent } from './vendor-detail/vendor-detail.component';
 import { OurPurchaseOrderDetailComponent } from './our-purchase-order-detail/our-purchase-order-detail.component';
+import { OurPosComponent } from './our-pos/our-pos.component';
+import { VendorInvoicesComponent } from './vendor-invoices/vendor-invoices.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { OurPurchaseOrderDetailComponent } from './our-purchase-order-detail/our
     DescriptionPipe,
     ParentDescriptionPipe,
     VendorDetailComponent,
-    OurPurchaseOrderDetailComponent
+    OurPurchaseOrderDetailComponent,
+    OurPosComponent,
+    VendorInvoicesComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +68,10 @@ import { OurPurchaseOrderDetailComponent } from './our-purchase-order-detail/our
       },
       {
         path: 'customer-detail/:id',
-        component: CustomerDetailComponent
+        component: CustomerDetailComponent,
+        children: [
+          { path: 'purchase-order-detail/:id', component: PurchaseOrderDetailComponent }
+        ]
       },
       {
         path: 'vendors',
@@ -72,15 +79,13 @@ import { OurPurchaseOrderDetailComponent } from './our-purchase-order-detail/our
       },
       {
         path: 'vendor-detail/:id',
-        component: VendorDetailComponent
-      },
-      {
-        path: 'purchase-order-detail/:id',
-        component: PurchaseOrderDetailComponent
-      },
-      {
-        path: 'our-purchase-order-detail/:id',
-        component: OurPurchaseOrderDetailComponent
+        component: VendorDetailComponent,
+        children: [
+          { path: '', redirectTo: 'ourPOs', pathMatch: 'full' },
+          { path: 'ourPOs', component: OurPosComponent },
+          { path: 'vendorInvoices', component: VendorInvoicesComponent },
+          { path: 'our-purchase-order-detail/:id', component: OurPurchaseOrderDetailComponent }
+        ]
       },
       {
         path: 'brokers',
