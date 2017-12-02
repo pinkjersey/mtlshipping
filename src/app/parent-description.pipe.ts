@@ -7,16 +7,30 @@ import {DescriptionPipeBase} from './descriptionPipeBase';
 export class ParentDescriptionPipe extends DescriptionPipeBase implements PipeTransform {
 
   transform(entityID: string, type: string, key: string, childList: any[], parentList: any[]): any {
-    const i = this.find(entityID, childList);
+    if (childList == null) {
+      return 'null child list';
+    }
+    if (parentList == null) {
+      return 'null parent list';
+    }
+
+    const i = DescriptionPipeBase.find(entityID, childList);
     if (i == null) {
       return 'child not found!';
     } else {
       if (type === 'DesignColor') {
-        const parent = this.find(i.designID, parentList);
+        const parent = DescriptionPipeBase.find(i.designID, parentList);
         if (parent == null) {
           return 'parent not found!';
         } else {
-          return this.describeDesign(parent);
+          return DescriptionPipeBase.describeDesign(parent);
+        }
+      } else if (type === 'PurchaseOrder') {
+        const parent = DescriptionPipeBase.find(i.customerID, parentList);
+        if (parent == null) {
+          return 'parent not found!';
+        } else {
+          return DescriptionPipeBase.describeCustomer(parent);
         }
       }
     }

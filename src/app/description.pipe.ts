@@ -7,12 +7,17 @@ import {DescriptionPipeBase} from './descriptionPipeBase';
 })
 export class DescriptionPipe extends DescriptionPipeBase implements PipeTransform {
   transform(entityID: string, type: string, list: any[]): string {
-    const i = this.find(entityID, list);
+    const i = DescriptionPipeBase.find(entityID, list);
     if (i == null) {
+      console.log(`entity ${entityID} not found`);
       return 'not found!';
     } else {
       if (type === 'DesignColor') {
-        return this.describeDesignColor(i);
+        return DescriptionPipeBase.describeDesignColor(i);
+      } else if (type === 'Vendor') {
+        return DescriptionPipeBase.describeVendor(i);
+      } else if (type === 'Customer') {
+        return DescriptionPipeBase.describeCustomer(i);
       }
     }
 

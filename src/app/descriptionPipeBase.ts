@@ -1,8 +1,10 @@
 import {DesignColor} from './design-detail/design-detail';
 import {Design} from './design/design';
+import {Vendor} from './vendor/vendor';
+import {Customer} from './app.customer';
 
 export class DescriptionPipeBase {
-  find(entityID: string, list: any[]): any {
+  static find(entityID: string, list: any[]): any {
     for (const i of list) {
       if (i.entityID === entityID) {
         return i;
@@ -11,11 +13,19 @@ export class DescriptionPipeBase {
     return null;
   }
 
-  describeDesignColor(i: DesignColor): string {
+  static describeDesignColor(i: DesignColor): string {
     return i.color;
   }
 
-  describeDesign(i: Design): string {
+  static describeDesign(i: Design): string {
     return i.designName
+  }
+
+  static describeVendor(i: Vendor): string {
+    return i.vendorName
+  }
+
+  static describeCustomer(i: Customer): string {
+    return i.customerName;
   }
 }

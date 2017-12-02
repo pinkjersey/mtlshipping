@@ -21,6 +21,8 @@ import { PurchaseOrderDetailComponent } from './purchase-order-detail/purchase-o
 import {PurchaseOrderService} from './purchase-order.service';
 import { DescriptionPipe } from './description.pipe';
 import { ParentDescriptionPipe } from './parent-description.pipe';
+import { VendorDetailComponent } from './vendor-detail/vendor-detail.component';
+import { OurPurchaseOrderDetailComponent } from './our-purchase-order-detail/our-purchase-order-detail.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { ParentDescriptionPipe } from './parent-description.pipe';
     DesignDetailComponent,
     PurchaseOrderDetailComponent,
     DescriptionPipe,
-    ParentDescriptionPipe
+    ParentDescriptionPipe,
+    VendorDetailComponent,
+    OurPurchaseOrderDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -67,8 +71,16 @@ import { ParentDescriptionPipe } from './parent-description.pipe';
         component: VendorComponent
       },
       {
+        path: 'vendor-detail/:id',
+        component: VendorDetailComponent
+      },
+      {
         path: 'purchase-order-detail/:id',
         component: PurchaseOrderDetailComponent
+      },
+      {
+        path: 'our-purchase-order-detail/:id',
+        component: OurPurchaseOrderDetailComponent
       },
       {
         path: 'brokers',

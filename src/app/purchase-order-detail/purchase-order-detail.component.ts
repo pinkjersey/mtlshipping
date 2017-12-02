@@ -96,7 +96,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     const item = new Item();
     item.entityID = ''; // assigned by the back end
     item.cancelled = false;
-    item.poNum = ''; // our PO is unassigned
+    item.ourPOID = ''; // our PO is unassigned
     item.vendorID = this.selectedVendor;
     item.designColorID = this.selectedDesignColor;
     item.orderedYards = this.orderedYards;

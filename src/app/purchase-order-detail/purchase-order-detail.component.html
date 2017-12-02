@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="purchaseOrder">
   <div><label>ID: </label>{{purchaseOrder.entityID}}</div>
   <div>
     <label>PO Date: </label>{{purchaseOrder.date | date }}

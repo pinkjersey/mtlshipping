@@ -1,0 +1,23 @@
+<div *ngIf="vendor">
+<h2>{{vendor.vendorName}} Purchase Orders</h2>
+<div>
+  <label>Our Purchase Order ID:
+    <input #poID />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="addPurchaseOrder(poID.value); poID.value=''">
+    add
+  </button>
+</div>
+<ul class="POs">
+  <li *ngFor="let purchaseOrder of ourPurchaseOrders" (click)="onSelect(purchaseOrder)" [class.selected]="purchaseOrder === selectedOurPurchaseOrder">
+    <span class="badge">{{purchaseOrder.entityID}}</span> {{purchaseOrder.ourPO}}
+  </li>
+</ul>
+<div *ngIf="selectedOurPurchaseOrder">
+  <h2>
+    {{selectedOurPurchaseOrder.ourPO}} is selected
+  </h2>
+  <button (click)="gotoDetail()">View Details</button>
+</div>
+</div>

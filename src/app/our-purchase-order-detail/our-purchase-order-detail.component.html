@@ -1,0 +1,25 @@
+<div *ngIf="ourPurchaseOrder">
+  <div><label>ID: </label>{{ourPurchaseOrder.entityID}}</div>
+  <div *ngIf="vendor">
+    <label>Vendor: </label>{{vendor.vendorName}}
+  </div>
+  <div>
+    <label>PO Date: </label>{{ourPurchaseOrder.date | date }}
+  </div>
+  <div>
+    <label>Our PO: </label>{{ourPurchaseOrder.ourPO}}
+  </div>
+  <div>
+    <label *ngIf="unassignedItems">Available items:
+      <select [(ngModel)]="selectedItem">
+        <option *ngFor="let i of unassignedItems" [ngValue]="i.entityID">{{i.orderedYards}} yards of {{i.designColorID | parentDescription: "DesignColor":"designID":allColors:designs}} - {{i.designColorID | description:"DesignColor":allColors}} for {{i.customerPOID | parentDescription: "PurchaseOrder":"customerID":allPOs:allCustomers}}</option>
+      </select>
+    </label>
+    <label>FOB in cents:
+      <input [(ngModel)]="FOB" type="number" style="text-align:right;">
+    </label>
+    <button (click)="updateItem();">
+      add
+    </button>
+  </div>
+</div>

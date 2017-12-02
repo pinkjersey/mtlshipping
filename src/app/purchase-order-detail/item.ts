@@ -1,7 +1,7 @@
 export class Item {
   entityID: string;
   cancelled: boolean;
-  poNum: string;
+  ourPOID: string;
   vendorID: string;
   designColorID: string;
   orderedYards: number;

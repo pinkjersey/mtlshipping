@@ -13,13 +13,19 @@ export class VendorComponent implements OnInit {
   selectedVendor: Vendor;
 
   constructor(private router: Router, private vendorService: VendorService) { }
-
+  onSelect(vendor: Vendor): void {
+    this.selectedVendor = vendor;
+  }
   ngOnInit() {
     this.getVendors()
   }
   getVendors(): void {
     this.vendorService.getVendors()
       .subscribe(vendors => this.vendors = vendors);
+  }
+
+  gotoDetail(): void {
+    this.router.navigate(['/vendor-detail', this.selectedVendor.entityID])
   }
 
   add(vendorName: string): void {
