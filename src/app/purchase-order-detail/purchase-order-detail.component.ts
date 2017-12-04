@@ -65,7 +65,10 @@ export class PurchaseOrderDetailComponent implements OnInit {
 
   getItems(): void {
     this.purchaseOrderService.getPOItems(this.purchaseOrder.entityID)
-      .subscribe(items => this.items = items);
+      .subscribe(items => {
+        this.items = items
+        console.log(`got new items ${items.length}`)
+      });
   }
 
   getColorsWithID(entityID): void {

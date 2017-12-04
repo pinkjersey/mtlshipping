@@ -25,6 +25,8 @@ import { VendorDetailComponent } from './vendor-detail/vendor-detail.component';
 import { OurPurchaseOrderDetailComponent } from './our-purchase-order-detail/our-purchase-order-detail.component';
 import { OurPosComponent } from './our-pos/our-pos.component';
 import { VendorInvoicesComponent } from './vendor-invoices/vendor-invoices.component';
+import { PosComponent } from './pos/pos.component';
+import { OurInvoicesComponent } from './our-invoices/our-invoices.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { VendorInvoicesComponent } from './vendor-invoices/vendor-invoices.compo
     VendorDetailComponent,
     OurPurchaseOrderDetailComponent,
     OurPosComponent,
-    VendorInvoicesComponent
+    VendorInvoicesComponent,
+    PosComponent,
+    OurInvoicesComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +74,9 @@ import { VendorInvoicesComponent } from './vendor-invoices/vendor-invoices.compo
         path: 'customer-detail/:id',
         component: CustomerDetailComponent,
         children: [
+          { path: '', redirectTo: 'POs', pathMatch: 'full' },
+          { path: 'POs', component: PosComponent },
+          { path: 'ourInvoices', component: OurInvoicesComponent },
           { path: 'purchase-order-detail/:id', component: PurchaseOrderDetailComponent }
         ]
       },

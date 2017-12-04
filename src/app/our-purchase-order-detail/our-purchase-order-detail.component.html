@@ -4,7 +4,12 @@
     <label>Vendor: </label>{{vendor.vendorName}}
   </div>
   <div>
-    <label>PO Date: </label>{{ourPurchaseOrder.date | date }}
+    <label>PO Date:
+      <input type="date" [(ngModel)]="poDate" placeholder="PO date">
+    </label>
+    <button *ngIf="poDate != ourPurchaseOrder.date" (click)="updateDate();">
+      update
+    </button>
   </div>
   <div>
     <label>Our PO: </label>{{ourPurchaseOrder.ourPO}}
@@ -21,5 +26,15 @@
     <button (click)="updateItem();">
       add
     </button>
+  </div>
+  <ul class="items">
+    <li *ngFor="let item of items" (click)="onSelect(item)" [class.nowarning]="!warnItem(item)" [class.warning]="warnItem(item)" [class.selected]="item === selectedAddedItem">
+      <span class="badge">{{item.entityID}}</span>
+      {{item.designColorID | parentDescription: "DesignColor":"designID":allColors:designs}},
+      {{item.designColorID | description:"DesignColor":allColors}}, {{item.orderedYards}} yards at {{item.fob}} cents
+    </li>
+  </ul>
+  <div *ngIf="selectedAddedItem">
+    <button (click)="gotoDetail()">View Details</button>
   </div>
 </div>

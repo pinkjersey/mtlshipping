@@ -25,7 +25,7 @@ export class VendorService extends ServiceBase {
   }
 
   broadcastVendorChange(nv: Vendor) {
-    console.log('broadcasting vendor change')
+    console.log('broadcasting vendor change');
     this.vendor.next(nv);
   }
 
@@ -72,7 +72,7 @@ export class VendorService extends ServiceBase {
   }
 
   addOurPurchaseOrder(po: OurPurchaseOrder): Observable<OurPurchaseOrder> {
-    return this.http.post<OurPurchaseOrder>(this.urlForPurchaseOrders, po, httpOptions).pipe(
+    return this.http.put<OurPurchaseOrder>(this.urlForPurchaseOrders, po, httpOptions).pipe(
       tap((response: OurPurchaseOrder) => this.log(`added po  w/ id=${response.entityID}`)),
       catchError(this.handleError<OurPurchaseOrder>('addOurPurchaseOrder'))
     );

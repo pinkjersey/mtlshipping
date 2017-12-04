@@ -78,4 +78,11 @@ export class PurchaseOrderService extends ServiceBase {
       catchError(this.handleError<Item>('addItemToOurPO'))
     );
   }
+
+  updateOurPurchaseOrder(po: OurPurchaseOrder): Observable<OurPurchaseOrder> {
+    return this.http.post<OurPurchaseOrder>(this.ourPOUrl, po, httpOptions).pipe(
+      tap((response: OurPurchaseOrder) => this.log(`added po  w/ id=${response.entityID}`)),
+      catchError(this.handleError<OurPurchaseOrder>('addOurPurchaseOrder'))
+    );
+  }
 }

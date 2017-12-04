@@ -56,10 +56,10 @@ export class OurPosComponent implements OnInit {
 
 
   gotoDetail(): void {
-    const lastSlash = this.router.url.lastIndexOf("/");
-    const url = this.router.url.substring(0, lastSlash)
+    const lastSlash = this.router.url.lastIndexOf('/');
+    const url = this.router.url.substring(0, lastSlash);
     const add = '/our-purchase-order-detail';
     console.log(url + add);
-    this.router.navigate([url + add, this.selectedOurPurchaseOrder.entityID])
+    this.router.navigate([url + add, this.selectedOurPurchaseOrder.entityID]);
   }
 }

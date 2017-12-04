@@ -8,6 +8,7 @@ import {of} from 'rxjs/observable/of';
 import { MessageService } from './message.service';
 import { ServiceBase } from './serviceBase'
 import {PurchaseOrder} from './purchase-order-detail/purchaseOrder';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,11 +16,18 @@ const httpOptions = {
 
 @Injectable()
 export class CustomerService extends ServiceBase {
+  private customer = new BehaviorSubject<Customer>(null);
+  public customerStream = this.customer.asObservable();
   private customerUrl = 'http://localhost:8080/customers';  // URL to web api
   private urlForPurchaseOrders = 'http://localhost:8080/purchaseOrders'
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'CustomerService');
+  }
+
+  broadcastCustomerChange(nc: Customer) {
+    console.log('broadcasting customer change')
+    this.customer.next(nc);
   }
 
   /** GET customers from the server */

@@ -1,0 +1,22 @@
+<div>
+  <h2>Purchase Orders</h2>
+  <div>
+    <label>Purchase Order ID:
+      <input #poID />
+    </label>
+    <button (click)="addPurchaseOrder(poID.value); poID.value=''">
+      add
+    </button>
+  </div>
+  <ul class="POs">
+    <li *ngFor="let purchaseOrder of purchaseOrders" (click)="onSelect(purchaseOrder)" [class.selected]="purchaseOrder === selectedPurchaseOrder">
+      <span class="badge">{{purchaseOrder.entityID}}</span> {{purchaseOrder.customerPO}}
+    </li>
+  </ul>
+  <div *ngIf="selectedPurchaseOrder">
+    <h2>
+      {{selectedPurchaseOrder.customerPO}} is selected
+    </h2>
+    <button (click)="gotoDetail()">View Details</button>
+  </div>
+</div>

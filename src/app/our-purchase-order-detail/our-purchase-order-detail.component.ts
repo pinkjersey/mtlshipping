@@ -26,11 +26,13 @@ export class OurPurchaseOrderDetailComponent implements OnInit {
   vendor: Vendor;
   unassignedItems: Item[];
   selectedItem: string;
+  selectedAddedItem: Item;
   designs: Design[];
   allColors: DesignColor[];
   allCustomers: Customer[];
   allPOs: PurchaseOrder[]; // used to get the customer
   FOB: number;
+  poDate: string;
 
   constructor(
     private router: Router,
@@ -47,6 +49,7 @@ export class OurPurchaseOrderDetailComponent implements OnInit {
       .switchMap((params: ParamMap) => this.purchaseOrderService.getOurPO(params.get('id')))
       .subscribe(po => {
         this.ourPurchaseOrder = po;
+        this.poDate = po.date;
         this.getItems();
         this.getVendor();
         this.getUnassignedItems();
@@ -58,6 +61,10 @@ export class OurPurchaseOrderDetailComponent implements OnInit {
     this.getPOs();
   }
 
+  onSelect(item: Item): void {
+    this.selectedAddedItem = item;
+  }
+
   getPOs(): void {
     this.purchaseOrderService.getPOs()
       .subscribe(r => {
@@ -67,6 +74,7 @@ export class OurPurchaseOrderDetailComponent implements OnInit {
   }
 
   getItems(): void {
+    console.log('OurPurchaseOrderDetailComponent getting our PO items');
     this.purchaseOrderService.getOurPOItems(this.ourPurchaseOrder.entityID)
       .subscribe(items => this.items = items);
   }
@@ -97,6 +105,27 @@ export class OurPurchaseOrderDetailComponent implements OnInit {
       .subscribe(designs => {
         this.designs = designs;
       });
+  }
+
+  updateDate(): void {
+    const updatedPO = new OurPurchaseOrder();
+    updatedPO.entityID = this.ourPurchaseOrder.entityID;
+    updatedPO.vendorID = this.ourPurchaseOrder.vendorID;
+    updatedPO.ourPO = this.ourPurchaseOrder.ourPO;
+    updatedPO.date = this.poDate;
+
+    this.purchaseOrderService.updateOurPurchaseOrder(updatedPO)
+      .subscribe(retItem => {
+        if (retItem != null) {
+          console.log(`${retItem.date} ${this.poDate}`);
+          this.ourPurchaseOrder.date = retItem.date;
+          this.poDate = retItem.date;
+        }
+      })
+  }
+
+  warnItem(item: Item): boolean {
+    return true;
   }
 
   updateItem(): void {
