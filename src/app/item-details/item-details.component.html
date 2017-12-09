@@ -1,0 +1,46 @@
+<div *ngIf="item">
+  <h2 *ngIf="allColors && designs">Item {{item.entityID}} {{item.designColorID | parentDescription:
+    "DesignColor":"designID":allColors:designs}} /
+    {{item.designColorID | description:"DesignColor":allColors}}</h2>
+  <form (ngSubmit)="updateItem()" #itemForm="ngForm">
+    <div class="row">
+      <div class="form-group col-xs-4">
+        <label for="orderedYards">Ordered Yards</label>
+        <input [(ngModel)]="orderedYards" class="form-control" id="orderedYards" name="orderedYards" required>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-xs-4">
+        <label for="shippedYards">Shipped Yards</label>
+        <input [(ngModel)]="shippedYards" class="form-control" id="shippedYards" name="shippedYards" required>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-xs-4">
+        <label for="FOB">FOB</label>
+        <input [(ngModel)]="fob" class="form-control" id="FOB" name="FOB" required>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-xs-4">
+        <label for="LDP">LDP</label>
+        <input [(ngModel)]="ldp" class="form-control" id="LDP" name="LDP" required>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-xs-4 input-append date">
+        <label for="millETS">Mill ETS</label>
+        <div class="input-group input-append millETS" id="datePicker">
+        <input type="date" [(ngModel)]="millETS" class="form-control" id="millETS" name="millETS">
+        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!itemForm.form.valid">Update</button>
+  </form>
+</div>

@@ -6,7 +6,7 @@ import {ServiceBase} from './serviceBase';
 import {PurchaseOrder} from './purchase-order-detail/purchaseOrder';
 import {OurPurchaseOrder} from './our-purchase-order-detail/ourPurchaseOrder';
 import {catchError, tap} from 'rxjs/operators';
-import {Item} from './purchase-order-detail/item';
+import {Item} from './item-details/item';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

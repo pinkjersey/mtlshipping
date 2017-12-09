@@ -6,43 +6,49 @@ import { PurchaseOrderService} from '../purchase-order.service';
 import { VendorService} from '../vendor.service';
 import { DesignService} from '../design.service';
 import {OurPurchaseOrder} from './ourPurchaseOrder';
-import {Item} from '../purchase-order-detail/item';
+import {Item} from '../item-details/item';
 import 'rxjs/add/operator/switchMap';
 import {Vendor} from '../vendor/vendor';
 import {DesignColor} from '../design-detail/design-detail';
 import {Design} from '../design/design';
 import {CustomerService} from '../app.customer.service';
 import {Customer} from '../app.customer';
-import {PurchaseOrder} from "../purchase-order-detail/purchaseOrder";
+import {PurchaseOrder} from '../purchase-order-detail/purchaseOrder';
+import {ItemDisplayer} from '../item-displayer';
 
 @Component({
   selector: 'app-our-purchase-order-detail',
   templateUrl: './our-purchase-order-detail.component.html',
   styleUrls: ['./our-purchase-order-detail.component.css']
 })
-export class OurPurchaseOrderDetailComponent implements OnInit {
+export class OurPurchaseOrderDetailComponent extends ItemDisplayer implements OnInit {
   @Input() ourPurchaseOrder: OurPurchaseOrder;
   items: Item[];
   vendor: Vendor;
   unassignedItems: Item[];
   selectedItem: string;
   selectedAddedItem: Item;
-  designs: Design[];
-  allColors: DesignColor[];
   allCustomers: Customer[];
   allPOs: PurchaseOrder[]; // used to get the customer
   FOB: number;
   poDate: string;
+  warnItem = OurPurchaseOrderDetailComponent.warnItem;
+
+  static warnItem(item: Item): boolean {
+    return item.millETS === OurPurchaseOrderDetailComponent.BLANK_DATE;
+  }
 
   constructor(
     private router: Router,
     private purchaseOrderService: PurchaseOrderService,
-    private designService: DesignService,
+    designService: DesignService,
     private vendorService: VendorService,
     private customerService: CustomerService,
     private route: ActivatedRoute,
     private location: Location
-  ) { }
+  ) { super(designService); }
+
+  private static get BLANK_DATE(): string { return '1980-01-01'; }
 
   ngOnInit() {
     this.route.paramMap
@@ -55,8 +61,7 @@ export class OurPurchaseOrderDetailComponent implements OnInit {
         this.getUnassignedItems();
       });
 
-    this.getDesigns();
-    this.getAllColors();
+    super.initDisplayer();
     this.getCustomers();
     this.getPOs();
   }
@@ -95,18 +100,6 @@ export class OurPurchaseOrderDetailComponent implements OnInit {
       .subscribe(unassignedItems => this.unassignedItems = unassignedItems);
   }
 
-  getAllColors(): void {
-    this.designService.getAllColors()
-      .subscribe(colors => this.allColors = colors);
-  }
-
-  getDesigns(): void {
-    this.designService.getDesigns()
-      .subscribe(designs => {
-        this.designs = designs;
-      });
-  }
-
   updateDate(): void {
     const updatedPO = new OurPurchaseOrder();
     updatedPO.entityID = this.ourPurchaseOrder.entityID;
@@ -124,8 +117,8 @@ export class OurPurchaseOrderDetailComponent implements OnInit {
       })
   }
 
-  warnItem(item: Item): boolean {
-    return true;
+  gotoItem(): void {
+    this.router.navigate(['/item-detail', this.selectedAddedItem.entityID])
   }
 
   updateItem(): void {
@@ -154,4 +147,6 @@ export class OurPurchaseOrderDetailComponent implements OnInit {
         }
       })
   }
+
+
 }

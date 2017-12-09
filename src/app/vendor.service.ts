@@ -3,11 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MessageService } from './message.service';
 import {Observable} from 'rxjs/Observable';
 import {Vendor} from './vendor/vendor';
-import { Item } from './purchase-order-detail/item'
 import {catchError, tap} from 'rxjs/operators';
 import {ServiceBase} from './serviceBase';
 import {OurPurchaseOrder} from './our-purchase-order-detail/ourPurchaseOrder';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Item} from './item-details/item';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

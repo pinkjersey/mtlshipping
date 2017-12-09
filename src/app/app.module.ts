@@ -16,6 +16,7 @@ import { VendorComponent } from './vendor/vendor.component';
 import {VendorService} from './vendor.service';
 import { DesignComponent } from './design/design.component';
 import {DesignService} from './design.service';
+import {ItemService} from './item.service';
 import { DesignDetailComponent } from './design-detail/design-detail.component';
 import { PurchaseOrderDetailComponent } from './purchase-order-detail/purchase-order-detail.component';
 import {PurchaseOrderService} from './purchase-order.service';
@@ -27,6 +28,7 @@ import { OurPosComponent } from './our-pos/our-pos.component';
 import { VendorInvoicesComponent } from './vendor-invoices/vendor-invoices.component';
 import { PosComponent } from './pos/pos.component';
 import { OurInvoicesComponent } from './our-invoices/our-invoices.component';
+import { ItemDetailsComponent } from './item-details/item-details.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { OurInvoicesComponent } from './our-invoices/our-invoices.component';
     OurPosComponent,
     VendorInvoicesComponent,
     PosComponent,
-    OurInvoicesComponent
+    OurInvoicesComponent,
+    ItemDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,10 @@ import { OurInvoicesComponent } from './our-invoices/our-invoices.component';
       {
         path: 'design-detail/:id',
         component: DesignDetailComponent
+      },
+      {
+        path: 'item-detail/:id',
+        component: ItemDetailsComponent
       },
       {
         path: 'customers',
@@ -105,7 +112,7 @@ import { OurInvoicesComponent } from './our-invoices/our-invoices.component';
     ])
   ],
   providers: [CustomerService, MessageService, BrokerService, VendorService,
-  DesignService, PurchaseOrderService],
+  DesignService, PurchaseOrderService, ItemService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

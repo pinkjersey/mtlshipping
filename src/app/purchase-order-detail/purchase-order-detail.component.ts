@@ -6,13 +6,11 @@ import { PurchaseOrderService} from '../purchase-order.service';
 import {PurchaseOrder} from './purchaseOrder';
 import {Design} from '../design/design';
 import {DesignService} from '../design.service';
-import {Item} from './item';
 import 'rxjs/add/operator/switchMap';
 import {DesignColor} from '../design-detail/design-detail';
 import {Vendor} from '../vendor/vendor';
 import {VendorService} from '../vendor.service';
-
-
+import {Item} from '../item-details/item';
 
 @Component({
   selector: 'app-purchase-order-detail',
