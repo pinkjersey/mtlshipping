@@ -29,6 +29,7 @@ import { VendorInvoicesComponent } from './vendor-invoices/vendor-invoices.compo
 import { PosComponent } from './pos/pos.component';
 import { OurInvoicesComponent } from './our-invoices/our-invoices.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
+import { VendorInvoiceDetailComponent } from './vendor-invoice-detail/vendor-invoice-detail.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
     VendorInvoicesComponent,
     PosComponent,
     OurInvoicesComponent,
-    ItemDetailsComponent
+    ItemDetailsComponent,
+    VendorInvoiceDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +100,8 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
           { path: '', redirectTo: 'ourPOs', pathMatch: 'full' },
           { path: 'ourPOs', component: OurPosComponent },
           { path: 'vendorInvoices', component: VendorInvoicesComponent },
-          { path: 'our-purchase-order-detail/:id', component: OurPurchaseOrderDetailComponent }
+          { path: 'our-purchase-order-detail/:id', component: OurPurchaseOrderDetailComponent },
+          { path: 'vendor-invoice-detail/:id', component: VendorInvoiceDetailComponent}
         ]
       },
       {

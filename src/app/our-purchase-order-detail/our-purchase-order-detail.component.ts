@@ -9,11 +9,8 @@ import {OurPurchaseOrder} from './ourPurchaseOrder';
 import {Item} from '../item-details/item';
 import 'rxjs/add/operator/switchMap';
 import {Vendor} from '../vendor/vendor';
-import {DesignColor} from '../design-detail/design-detail';
-import {Design} from '../design/design';
 import {CustomerService} from '../app.customer.service';
-import {Customer} from '../app.customer';
-import {PurchaseOrder} from '../purchase-order-detail/purchaseOrder';
+
 import {ItemDisplayer} from '../item-displayer';
 
 @Component({
@@ -28,8 +25,8 @@ export class OurPurchaseOrderDetailComponent extends ItemDisplayer implements On
   unassignedItems: Item[];
   selectedItem: string;
   selectedAddedItem: Item;
-  allCustomers: Customer[];
-  allPOs: PurchaseOrder[]; // used to get the customer
+  // allCustomers: Customer[];
+  // allPOs: PurchaseOrder[]; // used to get the customer
   FOB: number;
   poDate: string;
   warnItem = OurPurchaseOrderDetailComponent.warnItem;
@@ -40,13 +37,13 @@ export class OurPurchaseOrderDetailComponent extends ItemDisplayer implements On
 
   constructor(
     private router: Router,
-    private purchaseOrderService: PurchaseOrderService,
+    purchaseOrderService: PurchaseOrderService,
     designService: DesignService,
     private vendorService: VendorService,
-    private customerService: CustomerService,
+    customerService: CustomerService,
     private route: ActivatedRoute,
     private location: Location
-  ) { super(designService); }
+  ) { super(designService, customerService, purchaseOrderService); }
 
   private static get BLANK_DATE(): string { return '1980-01-01'; }
 
@@ -62,21 +59,13 @@ export class OurPurchaseOrderDetailComponent extends ItemDisplayer implements On
       });
 
     super.initDisplayer();
-    this.getCustomers();
-    this.getPOs();
   }
 
   onSelect(item: Item): void {
     this.selectedAddedItem = item;
   }
 
-  getPOs(): void {
-    this.purchaseOrderService.getPOs()
-      .subscribe(r => {
-        this.allPOs = r;
-        console.log('all pos set');
-      });
-  }
+
 
   getItems(): void {
     console.log('OurPurchaseOrderDetailComponent getting our PO items');
@@ -87,11 +76,6 @@ export class OurPurchaseOrderDetailComponent extends ItemDisplayer implements On
   getVendor(): void {
     this.vendorService.getVendor(this.ourPurchaseOrder.vendorID)
       .subscribe(vendor => this.vendor = vendor);
-  }
-
-  getCustomers(): void {
-    this.customerService.getCustomers()
-      .subscribe(c => this.allCustomers = c);
   }
 
   getUnassignedItems(): void {
@@ -129,6 +113,7 @@ export class OurPurchaseOrderDetailComponent extends ItemDisplayer implements On
     item.entityID = selectedItem.entityID;
     item.cancelled = selectedItem.cancelled;
     item.ourPOID = this.ourPurchaseOrder.entityID;
+    item.vendorInvoiceID = selectedItem.vendorInvoiceID;
     item.vendorID = selectedItem.vendorID;
     item.designColorID = selectedItem.designColorID;
     item.orderedYards = selectedItem.orderedYards;

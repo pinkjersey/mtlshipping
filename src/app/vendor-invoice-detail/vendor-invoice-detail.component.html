@@ -1,0 +1,43 @@
+<div *ngIf="vendorInvoice">
+
+  <div class="container">
+    <div *ngIf="vendorInvoice" class="row">
+      <div class="col-sm-12">
+        <label>ID: </label>{{vendorInvoice.entityID}}
+      </div>
+    </div>
+    <div *ngIf="vendor" class="row">
+      <div class="col-sm-12">
+        <label>Vendor: </label>{{vendor.vendorName}}
+      </div>
+    </div>
+    <div class="row" *ngIf="unassignedItems">
+      <div class="col-sm-12">
+        <form (ngSubmit)="addItem()" #itemForm="ngForm" class="form-inline">
+          <label for="items">Available items:</label>
+          <select id="items" name="items" [(ngModel)]="selectedItem">
+            <option *ngFor="let i of unassignedItems" [value]="i.entityID">
+              {{i.orderedYards}} yards of {{i.designColorID | parentDescription: "DesignColor":"designID":allColors:designs}} - {{i.designColorID | description:"DesignColor":allColors}} for {{i.customerPOID | parentDescription: "PurchaseOrder":"customerID":allPOs:allCustomers}}
+            </option>
+          </select>
+
+          <label for="shippedYards">Shipped yards:</label>
+          <input name="shippedYards" id="shippedYards" [(ngModel)]="shippedYards" type="number" style="text-align:right;">
+
+          <button type="submit" class="btn btn-primary">Add Item</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <ul class="items">
+        <li *ngFor="let item of items" (click)="onSelect(item)" [class.nowarning]="!warnItem(item)"
+            [class.warning]="warnItem(item)" [class.selected]="item === selectedAddedItem">
+          <span class="badge">{{item.entityID}}</span>
+          {{item.designColorID | parentDescription: "DesignColor":"designID":allColors:designs}},
+          {{item.designColorID | description:"DesignColor":allColors}}, {{item.shippedYards}} shipped yards at {{item.ldp}}
+          cents
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

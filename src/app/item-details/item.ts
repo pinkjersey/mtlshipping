@@ -2,6 +2,7 @@ export class Item {
   entityID: string;
   cancelled: boolean;
   ourPOID: string;
+  vendorInvoiceID: string;
   vendorID: string;
   designColorID: string;
   orderedYards: number;

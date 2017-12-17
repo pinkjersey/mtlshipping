@@ -1,3 +1,35 @@
-<p>
-  vendor-invoices works!
-</p>
+<div *ngIf="vendor">
+  <h3>{{vendor.vendorName}} Invoices</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+      <form (ngSubmit)="createInvoice()" #itemForm="ngForm" class="form-inline">
+        <div class="form-group col-xs-8">
+          <label for="invoiceID">New Invoice ID:</label>
+          <input [(ngModel)]="invoiceID" class="form-control" id="invoiceID" name="invoiceID" required>
+        </div>
+        <div class="col-xs-4">
+        <button type="submit" class="btn btn-success" [disabled]="!itemForm.form.valid || invoiceID == null || invoiceID.length == 0">New</button>
+        </div>
+      </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+      <ul class="vendorInvoices">
+        <li *ngFor="let vi of vendorInvoices" (click)="onSelect(vi)" [class.selected]="vi === selectedVendorInvoice">
+          <span class="badge">{{vi.entityID}}</span> {{vi.invoiceID}}
+        </li>
+      </ul>
+      </div>
+    </div>
+    <div class="row" *ngIf="selectedVendorInvoice">
+      <div class="col-sm-12">
+        <h2>
+          {{selectedVendorInvoice.invoiceID}} is selected
+        </h2>
+        <button (click)="gotoDetail()">View Details</button>
+      </div>
+    </div>
+  </div>
+</div>

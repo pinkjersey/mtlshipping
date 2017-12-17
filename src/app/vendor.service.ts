@@ -8,6 +8,7 @@ import {ServiceBase} from './serviceBase';
 import {OurPurchaseOrder} from './our-purchase-order-detail/ourPurchaseOrder';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Item} from './item-details/item';
+import {VendorInvoice} from './our-pos/vendor-invoice';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,6 +20,9 @@ export class VendorService extends ServiceBase {
   public vendorStream = this.vendor.asObservable();
   private url = 'http://localhost:8080/vendors';  // URL to web ap
   private urlForPurchaseOrders = 'http://localhost:8080/ourPurchaseOrders';
+  private urlForVendorInvoice = 'http://localhost:8080/vendorInvoices';
+  private itemsUrl = 'http://localhost:8080/items';
+
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'VendorService');
@@ -38,6 +42,23 @@ export class VendorService extends ServiceBase {
       );
   }
 
+  getVendorInvoice(id: string): Observable<VendorInvoice> {
+    const url = `${this.urlForVendorInvoice}/${id}`;
+    return this.http.get<VendorInvoice>(url).pipe(
+      tap(_ => this.log(`fetched vendor invoice id=${id}`)),
+      catchError(this.handleError<VendorInvoice>(`getVendorInvoice id=${id}`))
+    );
+  }
+
+  getVendorInvoices(id: string): Observable<VendorInvoice[]> {
+    const url = `${this.url}/${id}/vendorInvoices`;
+    return this.http.get<VendorInvoice[]>(url)
+      .pipe(
+        tap(invoices => this.log(`fetched vendor invoices`)),
+        catchError(this.handleError('getVendorInvoices', []))
+      );
+  }
+
   getVendorPOs(id: string): Observable<OurPurchaseOrder[]> {
     const url = `${this.url}/${id}/purchaseOrders`;
     return this.http.get<OurPurchaseOrder[]>(url)
@@ -47,12 +68,30 @@ export class VendorService extends ServiceBase {
       );
   }
 
+  getVendorInvoiceItems(id: string): Observable<Item[]> {
+    const url = `${this.urlForVendorInvoice}/${id}/items`;
+    return this.http.get<Item[]>(url)
+      .pipe(
+        tap(items => this.log(`fetched vendor invoice items`)),
+        catchError(this.handleError('getVendorInvoiceItems', []))
+      );
+  }
+
   getUnassignedItems(id: string): Observable<Item[]> {
     const url = `${this.url}/${id}/unassignedItems`;
     return this.http.get<Item[]>(url)
       .pipe(
         tap(designColors => this.log(`fetched vendor unassigned items`)),
         catchError(this.handleError('getUnassignedItems', []))
+      );
+  }
+
+  getUnassignedVendorInvoiceItems(id: string): Observable<Item[]> {
+    const url = `${this.url}/${id}/vendorInvoiceItems`;
+    return this.http.get<Item[]>(url)
+      .pipe(
+        tap(designColors => this.log(`fetched vendor unassigned vendor invoice items`)),
+        catchError(this.handleError('getUnassignedVendorInvoiceItems', []))
       );
   }
 
@@ -75,6 +114,21 @@ export class VendorService extends ServiceBase {
     return this.http.put<OurPurchaseOrder>(this.urlForPurchaseOrders, po, httpOptions).pipe(
       tap((response: OurPurchaseOrder) => this.log(`added po  w/ id=${response.entityID}`)),
       catchError(this.handleError<OurPurchaseOrder>('addOurPurchaseOrder'))
+    );
+  }
+
+  addInvoice(inv: VendorInvoice): Observable<VendorInvoice> {
+    console.log(`creating new invoice ${inv.entityID} for vendor ${inv.vendorID}`);
+    return this.http.put<VendorInvoice>(this.urlForVendorInvoice, inv, httpOptions).pipe(
+      tap((response: VendorInvoice) => this.log(`added vendor invoice w/ id=${response.entityID}`)),
+      catchError(this.handleError<VendorInvoice>('addInvoice'))
+    );
+  }
+
+  addItemToVendorInvoice(item: Item): Observable<Item> {
+    return this.http.post<Item>(this.itemsUrl, item, httpOptions).pipe(
+      tap((response: Item) => this.log(`added item w/ id=${response.entityID} to vendor invoice`)),
+      catchError(this.handleError<Item>('addItemToVendorInvoice'))
     );
   }
 }

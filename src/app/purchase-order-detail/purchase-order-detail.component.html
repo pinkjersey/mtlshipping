@@ -1,41 +1,50 @@
 <div *ngIf="purchaseOrder">
-  <div><label>ID: </label>{{purchaseOrder.entityID}}</div>
-  <div>
-    <label>PO Date: </label>{{purchaseOrder.date | date }}
-  </div>
-  <div>
-    <label>Customer PO: </label>{{purchaseOrder.customerPO}}
+  <div class="container">
+    <div class="row" *ngIf="purchaseOrder">
+      <div class="col-sm-2">
+        <label>ID: </label>{{purchaseOrder.entityID}}
+      </div>
+    </div>
+    <div class="row" *ngIf="purchaseOrder">
+      <div class="col-sm-2">
+        <label>Customer PO: </label>{{purchaseOrder.customerPO}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <form (ngSubmit)="addItem()" #itemForm="ngForm" class="form-inline">
+            <label for="design">Design:</label>
+            <select id="design" name="design" (change)="getColors($event)">
+              <option *ngFor="let d of designs" [value]="d.entityID">
+                {{d.designName}}
+              </option>
+            </select>
+
+            <label for="color">Color:</label>
+              <select id="color" name="color" [(ngModel)]="selectedDesignColor" *ngIf="designID">
+                <option *ngFor="let c of colors" [ngValue]="c.entityID">{{c.color}}</option>
+              </select>
+
+            <label for="vendor">Vendor:</label>
+            <select id="vendor" name="vendor" [(ngModel)]="selectedVendor">
+              <option *ngFor="let v of vendors" [ngValue]="v.entityID">{{v.vendorName}}</option>
+            </select>
+
+
+            <label for="orderedYards">Ordered Yards:</label>
+            <input name="orderedYards" id="orderedYards" [(ngModel)]="orderedYards" type="number" step="0.01" style="text-align:right;">
+
+
+            <label for="ldp">LDP:</label>
+            <input name="ldp" id="ldp" [(ngModel)]="LDP" type="number" style="text-align:right;">
+
+          <button type="submit" class="btn btn-primary">Add Item</button>
+        </form>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <label>Design:
-      <select (change)="getColors($event)">
-        <option *ngFor="let d of designs; let i=index"
-                [value]="d.entityID">
-          {{d.designName}}
-        </option>
-      </select>
-    </label>
-    <label *ngIf="designID">Color:
-      <select [(ngModel)]="selectedDesignColor">
-        <option *ngFor="let c of colors" [ngValue]="c.entityID">{{c.color}}</option>
-      </select>
-    </label>
-    <label>Vendor:
-      <select [(ngModel)]="selectedVendor">
-        <option *ngFor="let v of vendors" [ngValue]="v.entityID">{{v.vendorName}}</option>
-      </select>
-    </label>
-    <label>Ordered Yards:
-      <input [(ngModel)]="orderedYards" type="number" step="0.01" style="text-align:right;">
-    </label>
-    <label>LDP in cents:
-      <input [(ngModel)]="LDP" type="number" style="text-align:right;">
-    </label>
-    <button (click)="addItem();">
-      add
-    </button>
-  </div>
+
   <ul class="items">
     <li *ngFor="let item of items">
       <span class="badge">{{item.entityID}}</span>

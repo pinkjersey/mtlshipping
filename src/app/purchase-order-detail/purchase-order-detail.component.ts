@@ -98,6 +98,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     item.entityID = ''; // assigned by the back end
     item.cancelled = false;
     item.ourPOID = ''; // our PO is unassigned
+    item.vendorInvoiceID = ''; // vendor invoice id not set
     item.vendorID = this.selectedVendor;
     item.designColorID = this.selectedDesignColor;
     item.orderedYards = this.orderedYards;

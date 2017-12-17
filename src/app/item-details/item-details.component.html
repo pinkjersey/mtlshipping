@@ -1,5 +1,5 @@
-<div *ngIf="item">
-  <h2 *ngIf="allColors && designs">Item {{item.entityID}} {{item.designColorID | parentDescription:
+<div>
+  <h2 *ngIf="item && allColors && designs">Item {{item.entityID}} {{item.designColorID | parentDescription:
     "DesignColor":"designID":allColors:designs}} /
     {{item.designColorID | description:"DesignColor":allColors}}</h2>
   <form (ngSubmit)="updateItem()" #itemForm="ngForm">
@@ -41,6 +41,7 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-success" [disabled]="!itemForm.form.valid">Update</button>
+    <button type="submit" class="btn btn-success" [disabled]="!(itemForm.form.valid && itemForm.form.dirty)">Update</button>
   </form>
+
 </div>
