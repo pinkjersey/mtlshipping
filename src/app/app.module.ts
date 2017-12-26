@@ -17,6 +17,7 @@ import {VendorService} from './vendor.service';
 import { DesignComponent } from './design/design.component';
 import {DesignService} from './design.service';
 import {ItemService} from './item.service';
+import {VesselService} from './vessel.service'
 import { DesignDetailComponent } from './design-detail/design-detail.component';
 import { PurchaseOrderDetailComponent } from './purchase-order-detail/purchase-order-detail.component';
 import {PurchaseOrderService} from './purchase-order.service';
@@ -30,6 +31,9 @@ import { PosComponent } from './pos/pos.component';
 import { OurInvoicesComponent } from './our-invoices/our-invoices.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { VendorInvoiceDetailComponent } from './vendor-invoice-detail/vendor-invoice-detail.component';
+import { ShipmentComponent } from './shipment/shipment.component';
+import { VesselComponent } from './vessel/vessel.component';
+import { ShipmentTypeComponent } from './shipment-type/shipment-type.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +55,10 @@ import { VendorInvoiceDetailComponent } from './vendor-invoice-detail/vendor-inv
     PosComponent,
     OurInvoicesComponent,
     ItemDetailsComponent,
-    VendorInvoiceDetailComponent
+    VendorInvoiceDetailComponent,
+    ShipmentComponent,
+    VesselComponent,
+    ShipmentTypeComponent
   ],
   imports: [
     BrowserModule,
@@ -105,6 +112,18 @@ import { VendorInvoiceDetailComponent } from './vendor-invoice-detail/vendor-inv
         ]
       },
       {
+        path: 'shipment',
+        component: ShipmentComponent
+      },
+      {
+        path: 'shipmentType',
+        component: ShipmentTypeComponent
+      },
+      {
+        path: 'vessels',
+        component: VesselComponent
+      },
+      {
         path: 'brokers',
         component: BrokerComponent
       },
@@ -115,7 +134,7 @@ import { VendorInvoiceDetailComponent } from './vendor-invoice-detail/vendor-inv
     ])
   ],
   providers: [CustomerService, MessageService, BrokerService, VendorService,
-  DesignService, PurchaseOrderService, ItemService],
+  DesignService, PurchaseOrderService, ItemService, VesselService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
