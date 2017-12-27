@@ -16,7 +16,7 @@ export class VesselService extends ServiceBase {
 
   constructor(private http: HttpClient,
               messageService: MessageService) {
-    super(messageService, 'BrokerService');
+    super(messageService, 'VesselService');
   }
   getVessels(): Observable<Vessel[]> {
     return this.http.get<Vessel[]>(this.url)

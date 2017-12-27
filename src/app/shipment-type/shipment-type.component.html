@@ -1,3 +1,19 @@
-<p>
-  shipment-type works!
-</p>
+<div class="container">
+  <div class="row"><h2>Shipment Types</h2></div>
+  <div class="row"> <!-- form -->
+    <form (ngSubmit)="add()" #itemForm="ngForm" class="form-inline">
+
+      <label for="shipmentType">New Shipment Type:</label>
+      <input name="shipmentType" id="shipmentType" [(ngModel)]="shipmentType">
+
+      <button type="submit" class="btn btn-primary">Add Shipment Type</button>
+    </form>
+  </div>
+  <div class="row">
+    <ul class="shipmentTypes">
+      <li *ngFor="let st of shipmentTypes">
+        <span class="badge">{{st.entityID}}</span>{{st.shipmentType}}
+      </li>
+    </ul>
+  </div>
+</div>

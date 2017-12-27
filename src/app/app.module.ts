@@ -34,6 +34,9 @@ import { VendorInvoiceDetailComponent } from './vendor-invoice-detail/vendor-inv
 import { ShipmentComponent } from './shipment/shipment.component';
 import { VesselComponent } from './vessel/vessel.component';
 import { ShipmentTypeComponent } from './shipment-type/shipment-type.component';
+import {ShipmentTypeService} from './shipment-type.service';
+import {ShipmentService} from './shipment.service';
+import { ShipmentDetailComponent } from './shipment-detail/shipment-detail.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +61,8 @@ import { ShipmentTypeComponent } from './shipment-type/shipment-type.component';
     VendorInvoiceDetailComponent,
     ShipmentComponent,
     VesselComponent,
-    ShipmentTypeComponent
+    ShipmentTypeComponent,
+    ShipmentDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -112,11 +116,15 @@ import { ShipmentTypeComponent } from './shipment-type/shipment-type.component';
         ]
       },
       {
-        path: 'shipment',
+        path: 'shipments',
         component: ShipmentComponent
       },
       {
-        path: 'shipmentType',
+        path: 'shipment-detail/:id',
+        component: ShipmentDetailComponent
+      },
+      {
+        path: 'shipmentTypes',
         component: ShipmentTypeComponent
       },
       {
@@ -134,7 +142,8 @@ import { ShipmentTypeComponent } from './shipment-type/shipment-type.component';
     ])
   ],
   providers: [CustomerService, MessageService, BrokerService, VendorService,
-  DesignService, PurchaseOrderService, ItemService, VesselService],
+  DesignService, PurchaseOrderService, ItemService, VesselService, ShipmentTypeService,
+  ShipmentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

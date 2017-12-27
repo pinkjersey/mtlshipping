@@ -1,3 +1,59 @@
-<p>
-  shipment works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+    <h3>Shipments</h3>
+    </div>
+  </div>
+  <div class="row shipmentForm"> <!-- FORM -->
+    <form *ngIf="vessels && brokers && shipmentTypes" (ngSubmit)="createShipment()" #itemForm="ngForm" class="form-inline">
+      <div class="form-group col-sm-3">
+        <label for="eta">ETA:</label>
+        <input type="date" [(ngModel)]="eta" class="form-control" id="eta" name="eta" required>
+      </div>
+      <div class="form-group col-sm-2">
+        <label for="broker">Broker</label>
+        <select class="form-control" id="broker" name="broker" [(ngModel)]="broker" required>
+          <option *ngFor="let b of brokers" [ngValue]="b.entityID">{{b.brokerName}}</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-2">
+        <label for="vessel">Vessel</label>
+        <select class="form-control" id="vessel" name="vessel" [(ngModel)]="vessel" required>
+          <option *ngFor="let v of vessels" [ngValue]="v.entityID">{{v.vesselName}}</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-3">
+        <label for="shipmentType">Shipment Type</label>
+        <select class="form-control" id="shipmentType" name="shipmentType" [(ngModel)]="shipmentType" required>
+          <option *ngFor="let st of shipmentTypes" [ngValue]="st.entityID">{{st.shipmentType}}</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-2">
+      <button type="submit" class="btn btn-success" [disabled]="!itemForm.form.valid">Create</button>
+      </div>
+    </form>
+  </div>
+  <div class="row shipmentDetail">
+    <div *ngIf="selectedShipment" class="col-sm-2">
+      {{selectedShipment.entityID}} is selected
+    </div>
+    <div *ngIf="!selectedShipment" class="col-sm-2">
+      Nothing is selected
+    </div>
+    <div class="col-sm-10">
+      <button (click)="gotoDetail()" [disabled]="!selectedShipment">View Details</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+    <div class="list-group">
+      <button *ngFor="let shipment of shipments" type="button" (click)="onSelect(shipment)" class="list-group-item list-group-item-action"
+              [class.active]="shipment === selectedShipment" [class.list-group-item-warning]="isWarning(shipment)"
+              [class.list-group-item-danger]="isDanger(shipment)" [class.list-group-item-success]="isSuccesful(shipment)">
+        <span class="badge badge-default badge-pill">{{shipment.entityID}}</span>
+        Vessel: {{shipment.vesselID | description:"Vessel":vessels}} ETA: {{shipment.eta | date}}
+      </button>
+    </div>
+    </div>
+  </div>
+</div>

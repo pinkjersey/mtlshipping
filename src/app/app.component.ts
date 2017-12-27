@@ -8,10 +8,11 @@ import { Component } from '@angular/core';
     <a routerLink="/dashboard">Dashboard</a>
     <a routerLink="/customers">Customers</a>
     <a routerLink="/vendors">Vendors</a>
-    <a routerLink="/shipping">Shipping</a>
+    <a routerLink="/shipments">Shipments</a>
     <a routerLink="/designs">Designs</a>
     <a routerLink="/brokers">Brokers</a>
     <a routerLink="/vessels">Vessels</a>
+    <a routerLink="/shipmentTypes">Shipment Types</a>
   </nav>
   <router-outlet></router-outlet>
   `

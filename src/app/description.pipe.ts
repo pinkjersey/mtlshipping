@@ -18,6 +18,8 @@ export class DescriptionPipe extends DescriptionPipeBase implements PipeTransfor
         return DescriptionPipeBase.describeVendor(i);
       } else if (type === 'Customer') {
         return DescriptionPipeBase.describeCustomer(i);
+      } else if (type === 'Vessel') {
+        return DescriptionPipeBase.describeVessel(i)
       }
     }
 

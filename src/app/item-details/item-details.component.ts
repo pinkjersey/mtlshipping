@@ -37,28 +37,14 @@ export class ItemDetailsComponent extends ItemDisplayer implements AfterViewInit
 
   private static get BLANK_DATE(): string { return '1980-01-01'; }
 
-  /*ngOnInit() {
-
-
-
-  }*/
-
   ngAfterViewInit() {
-    console.log('view init')
+    console.log('view init');
     this.route.paramMap
       .switchMap((params: ParamMap) => this.itemService.getItem(params.get('id')))
       .subscribe(item => {
         this.item = item;
         this.copyItem(item);
       });
-
-    if (this.itemForm == null) {
-      console.log('Sad panda: itemform null');
-    } else {
-      console.log('works!')
-    }
-
-    console.log('Calling base init');
     super.initDisplayer();
   }
 

@@ -2,6 +2,7 @@ import {DesignColor} from './design-detail/design-detail';
 import {Design} from './design/design';
 import {Vendor} from './vendor/vendor';
 import {Customer} from './app.customer';
+import {Vessel} from './vessel/vessel';
 
 export class DescriptionPipeBase {
   static find(entityID: string, list: any[]): any {
@@ -27,5 +28,9 @@ export class DescriptionPipeBase {
 
   static describeCustomer(i: Customer): string {
     return i.customerName;
+  }
+
+  static describeVessel(i: Vessel): string {
+    return i.vesselName;
   }
 }
