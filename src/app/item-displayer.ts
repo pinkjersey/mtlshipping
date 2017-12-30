@@ -8,10 +8,10 @@ import {CustomerService} from './app.customer.service';
 import {PurchaseOrderService} from './purchase-order.service';
 
 export class ItemDisplayer  {
-  protected allColors: DesignColor[];
-  protected designs: Design[];
-  protected allCustomers: Customer[];
-  protected allPOs: PurchaseOrder[];
+  public allColors: DesignColor[];
+  public designs: Design[];
+  public allCustomers: Customer[];
+  public allPOs: PurchaseOrder[];
 
   constructor(
     protected designService: DesignService,
