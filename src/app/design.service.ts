@@ -6,6 +6,9 @@ import {Design} from './design/design';
 import {catchError, tap} from 'rxjs/operators';
 import {ServiceBase} from './serviceBase';
 import {DesignColor} from './design-detail/design-detail';
+import {Urls} from './urls';
+import {UrlsProd} from './urls.prod';
+import {environment} from '../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,11 +16,16 @@ const httpOptions = {
 
 @Injectable()
 export class DesignService extends ServiceBase {
-  private url = 'http://localhost:8080/designs';  // URL to web ap
-  private urlForColors = 'http://localhost:8080/designcolors';
+  private url = Urls.DESIGNS;  // URL to web ap
+  private urlForColors = Urls.DESIGNCOLORS;
+
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'DesignService');
+    if (environment.production) {
+      this.url = UrlsProd.DESIGNS;
+      this.urlForColors = UrlsProd.DESIGNCOLORS;
+    }
   }
   getDesigns(): Observable<Design[]> {
     return this.http.get<Design[]>(this.url)

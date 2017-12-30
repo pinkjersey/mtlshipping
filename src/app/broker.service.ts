@@ -5,6 +5,9 @@ import {Observable} from 'rxjs/Observable';
 import {Broker} from './broker/broker';
 import {catchError, tap} from 'rxjs/operators';
 import {ServiceBase} from './serviceBase';
+import {Urls} from './urls';
+import {UrlsProd} from './urls.prod';
+import {environment} from '../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,10 +15,13 @@ const httpOptions = {
 
 @Injectable()
 export class BrokerService extends ServiceBase {
-  private url = 'http://localhost:8080/brokers';  // URL to web ap
+  private url = Urls.BROKERS;  // URL to web ap
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'BrokerService');
+    if (environment.production) {
+      this.url = UrlsProd.BROKERS;
+    }
   }
   /** GET brokers from the server */
   getBrokers(): Observable<Broker[]> {

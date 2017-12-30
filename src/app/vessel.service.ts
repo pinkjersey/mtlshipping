@@ -5,6 +5,9 @@ import {Observable} from 'rxjs/Observable';
 import {Vessel} from './vessel/vessel'
 import {catchError, tap} from 'rxjs/operators';
 import {ServiceBase} from './serviceBase';
+import {Urls} from './urls';
+import {UrlsProd} from './urls.prod';
+import {environment} from '../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,11 +15,14 @@ const httpOptions = {
 
 @Injectable()
 export class VesselService extends ServiceBase {
-  private url = 'http://localhost:8080/vessels';  // URL to web ap
+  private url = Urls.VESSELS;
 
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'VesselService');
+    if (environment.production) {
+      this.url = UrlsProd.VESSELS;
+    }
   }
   getVessels(): Observable<Vessel[]> {
     return this.http.get<Vessel[]>(this.url)

@@ -9,6 +9,9 @@ import { MessageService } from './message.service';
 import { ServiceBase } from './serviceBase'
 import {PurchaseOrder} from './purchase-order-detail/purchaseOrder';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Urls} from './urls';
+import {UrlsProd} from './urls.prod';
+import {environment} from '../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -18,15 +21,19 @@ const httpOptions = {
 export class CustomerService extends ServiceBase {
   private customer = new BehaviorSubject<Customer>(null);
   public customerStream = this.customer.asObservable();
-  private customerUrl = 'http://localhost:8080/customers';  // URL to web api
-  private urlForPurchaseOrders = 'http://localhost:8080/purchaseOrders'
+  private customerUrl = Urls.CUSTOMERS;
+  private urlForPurchaseOrders = Urls.PURCHASEORDERS;
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'CustomerService');
+    if (environment.production) {
+      this.customerUrl = UrlsProd.CUSTOMERS;
+      this.urlForPurchaseOrders = UrlsProd.PURCHASEORDERS;
+    }
   }
 
   broadcastCustomerChange(nc: Customer) {
-    console.log('broadcasting customer change')
+    console.log('broadcasting customer change');
     this.customer.next(nc);
   }
 

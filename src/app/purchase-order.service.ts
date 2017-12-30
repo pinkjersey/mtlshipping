@@ -7,6 +7,9 @@ import {PurchaseOrder} from './purchase-order-detail/purchaseOrder';
 import {OurPurchaseOrder} from './our-purchase-order-detail/ourPurchaseOrder';
 import {catchError, tap} from 'rxjs/operators';
 import {Item} from './item-details/item';
+import {Urls} from './urls';
+import {UrlsProd} from './urls.prod';
+import {environment} from '../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,13 +17,18 @@ const httpOptions = {
 
 @Injectable()
 export class PurchaseOrderService extends ServiceBase {
-  private url = 'http://localhost:8080/purchaseOrders';
-  private ourPOUrl = 'http://localhost:8080/ourPurchaseOrders';
-  private itemsUrl = 'http://localhost:8080/items';
+  private url = Urls.PURCHASEORDERS;
+  private ourPOUrl = Urls.OURPURCHASEORDERS;
+  private itemsUrl = Urls.ITEMS;
 
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'PurchaseOrderService');
+    if (environment.production) {
+      this.url = UrlsProd.PURCHASEORDERS;
+      this.ourPOUrl = UrlsProd.OURPURCHASEORDERS;
+      this.itemsUrl = UrlsProd.ITEMS;
+    }
   }
 
   getPOs(): Observable<PurchaseOrder[]> {

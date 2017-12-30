@@ -5,6 +5,9 @@ import {Observable} from 'rxjs/Observable';
 import {Shipment} from './shipment/shipment'
 import {catchError, tap} from 'rxjs/operators';
 import {ServiceBase} from './serviceBase';
+import {Urls} from './urls';
+import {UrlsProd} from './urls.prod';
+import {environment} from '../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,10 +15,13 @@ const httpOptions = {
 
 @Injectable()
 export class ShipmentService extends ServiceBase {
-  private url = 'http://localhost:8080/shipments';
+  private url = Urls.SHIPMENTS;
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'ShipmentService');
+    if (environment.production) {
+      this.url = UrlsProd.SHIPMENTS;
+    }
   }
   getShipments(): Observable<Shipment[]> {
     return this.http.get<Shipment[]>(this.url)

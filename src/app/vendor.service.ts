@@ -9,6 +9,9 @@ import {OurPurchaseOrder} from './our-purchase-order-detail/ourPurchaseOrder';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Item} from './item-details/item';
 import {VendorInvoice} from './our-pos/vendor-invoice';
+import {Urls} from './urls';
+import {UrlsProd} from './urls.prod';
+import {environment} from '../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -18,14 +21,20 @@ const httpOptions = {
 export class VendorService extends ServiceBase {
   private vendor = new BehaviorSubject<Vendor>(null);
   public vendorStream = this.vendor.asObservable();
-  private url = 'http://localhost:8080/vendors';  // URL to web ap
-  private urlForPurchaseOrders = 'http://localhost:8080/ourPurchaseOrders';
-  private urlForVendorInvoice = 'http://localhost:8080/vendorInvoices';
-  private itemsUrl = 'http://localhost:8080/items';
+  private url = Urls.VENDORS;
+  private urlForPurchaseOrders = Urls.OURPURCHASEORDERS;
+  private urlForVendorInvoice = Urls.VENDORINVOICES;
+  private itemsUrl = Urls.ITEMS;
 
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'VendorService');
+    if (environment.production) {
+      this.url = UrlsProd.VENDORS;
+      this.urlForPurchaseOrders = UrlsProd.OURPURCHASEORDERS;
+      this.urlForVendorInvoice = UrlsProd.VENDORINVOICES;
+      this.itemsUrl = UrlsProd.ITEMS;
+    }
   }
 
   broadcastVendorChange(nv: Vendor) {
