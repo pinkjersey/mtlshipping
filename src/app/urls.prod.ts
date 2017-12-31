@@ -1,5 +1,5 @@
 export class UrlsProd {
-  private static readonly BASEURL = 'https://mtlglobalshipback.appspot.com';
+  private static readonly BASEURL = 'http://mtlshipback.ipmus.com:8080';
   public static readonly BROKERS = UrlsProd.BASEURL + '/brokers';
   public static readonly DESIGNS = UrlsProd.BASEURL + '/designs';
   public static readonly DESIGNCOLORS = UrlsProd.BASEURL + '/designcolors';
