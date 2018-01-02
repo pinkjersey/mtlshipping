@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import { RouterModule } from '@angular/router'
 
 import { AppComponent } from './app.component';
@@ -37,6 +37,10 @@ import { ShipmentTypeComponent } from './shipment-type/shipment-type.component';
 import {ShipmentTypeService} from './shipment-type.service';
 import {ShipmentService} from './shipment.service';
 import { ShipmentDetailComponent } from './shipment-detail/shipment-detail.component';
+import { LoginComponent } from './login/login.component';
+import {LoginService} from './login.service';
+import {TokenInterceptor} from './token.interceptor';
+import {AuthService} from './auth.service';
 
 @NgModule({
   declarations: [
@@ -62,7 +66,8 @@ import { ShipmentDetailComponent } from './shipment-detail/shipment-detail.compo
     ShipmentComponent,
     VesselComponent,
     ShipmentTypeComponent,
-    ShipmentDetailComponent
+    ShipmentDetailComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +76,7 @@ import { ShipmentDetailComponent } from './shipment-detail/shipment-detail.compo
     RouterModule.forRoot([
       {
         path: '',
-        redirectTo: '/dashboard',
+        redirectTo: '/login',
         pathMatch: 'full'
       },
       {
@@ -138,12 +143,16 @@ import { ShipmentDetailComponent } from './shipment-detail/shipment-detail.compo
       {
         path: 'dashboard',
         component: DashboardComponent
+      },
+      {
+        path: 'login',
+        component: LoginComponent
       }
     ])
   ],
   providers: [CustomerService, MessageService, BrokerService, VendorService,
   DesignService, PurchaseOrderService, ItemService, VesselService, ShipmentTypeService,
-  ShipmentService],
+  ShipmentService, LoginService, AuthService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

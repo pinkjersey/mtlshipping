@@ -12,4 +12,5 @@ export class Urls {
   public static readonly VESSELS = Urls.BASEURL + '/vessels';
   public static readonly PURCHASEORDERS = Urls.BASEURL + '/purchaseOrders';
   public static readonly CUSTOMERS = Urls.BASEURL + '/customers';
+  public static readonly LOGIN = Urls.BASEURL + '/login';
 }
