@@ -28,7 +28,7 @@ export class ParentDescriptionPipe extends DescriptionPipeBase implements PipeTr
       } else if (type === 'PurchaseOrder') {
         const parent = DescriptionPipeBase.find(i.customerID, parentList);
         if (parent == null) {
-          return 'parent not found!';
+          return `Customer ${i.customerID} for PO not found. Parent list contains ${parentList.length} items`;
         } else {
           return DescriptionPipeBase.describeCustomer(parent);
         }

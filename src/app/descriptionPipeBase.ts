@@ -3,6 +3,7 @@ import {Design} from './design/design';
 import {Vendor} from './vendor/vendor';
 import {Customer} from './app.customer';
 import {Vessel} from './vessel/vessel';
+import {PurchaseOrder} from "./purchase-order-detail/purchaseOrder";
 
 export class DescriptionPipeBase {
   static find(entityID: string, list: any[]): any {
@@ -32,5 +33,9 @@ export class DescriptionPipeBase {
 
   static describeVessel(i: Vessel): string {
     return i.vesselName;
+  }
+
+  static describeCustomerPO(i: PurchaseOrder): string {
+    return i.customerPO;
   }
 }

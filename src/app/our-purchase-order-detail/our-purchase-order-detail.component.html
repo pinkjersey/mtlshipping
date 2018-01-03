@@ -17,7 +17,8 @@
   <div>
     <label *ngIf="unassignedItems">Available items:
       <select [(ngModel)]="selectedItem">
-        <option *ngFor="let i of unassignedItems" [ngValue]="i.entityID">{{i.orderedYards}} yards of {{i.designColorID | parentDescription: "DesignColor":"designID":allColors:designs}} - {{i.designColorID | description:"DesignColor":allColors}} for {{i.customerPOID | parentDescription: "PurchaseOrder":"customerID":allPOs:allCustomers}}</option>
+        <option *ngFor="let i of unassignedItems" [ngValue]="i.entityID">{{i.orderedYards}} yards of {{i.designColorID | parentDescription: "DesignColor":"designID":allColors:designs}} - {{i.designColorID | description:"DesignColor":allColors}}
+          for {{i.customerPOID | parentDescription: "PurchaseOrder":"customerID":allPOs:allCustomers}} - {{i.customerPOID | description: "CustomerPO":allPOs}}</option>
       </select>
     </label>
     <label>FOB in cents:
