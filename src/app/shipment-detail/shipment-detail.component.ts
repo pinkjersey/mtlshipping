@@ -93,4 +93,8 @@ export class ShipmentDetailComponent implements AfterViewInit {
         }
       })
   }
+
+  createContainer(): void {
+    console.log('not yet implemented')
+  }
 }
