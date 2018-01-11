@@ -41,6 +41,7 @@ import { LoginComponent } from './login/login.component';
 import {LoginService} from './login.service';
 import {TokenInterceptor} from './token.interceptor';
 import {AuthService} from './auth.service';
+import { ContainerDetailComponent } from './container-detail/container-detail.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import {AuthService} from './auth.service';
     VesselComponent,
     ShipmentTypeComponent,
     ShipmentDetailComponent,
-    LoginComponent
+    LoginComponent,
+    ContainerDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -127,6 +129,10 @@ import {AuthService} from './auth.service';
       {
         path: 'shipment-detail/:id',
         component: ShipmentDetailComponent
+      },
+      {
+        path: 'container-detail/:id',
+        component: ContainerDetailComponent
       },
       {
         path: 'shipmentTypes',

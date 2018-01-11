@@ -64,7 +64,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   getItems(): void {
     this.purchaseOrderService.getPOItems(this.purchaseOrder.entityID)
       .subscribe(items => {
-        this.items = items
+        this.items = items;
         console.log(`got new items ${items.length}`)
       });
   }

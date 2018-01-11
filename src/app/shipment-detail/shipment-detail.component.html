@@ -5,7 +5,7 @@
         <h2 *ngIf="shipment && allShipmentTypes">Shipment {{shipment.entityID}}</h2>
       </div>
     </div>
-    <div class="row">
+    <div class="row containerForm">
       <div class="col-sm">
         <form (ngSubmit)="updateShipment()" #shipmentForm="ngForm">
           <div class="row">
@@ -13,14 +13,10 @@
               <label for="eta">ETA</label>
               <input type="date" [(ngModel)]="eta" class="form-control" id="eta" name="eta" required>
             </div>
-          </div>
-          <div class="row">
             <div class="form-group col-xs-4">
               <label for="status">Status</label>
               <input [(ngModel)]="status" class="form-control" id="status" name="status" required>
             </div>
-          </div>
-          <div class="row">
             <div class="form-group col-xs-4">
               <label for="shipmentType">Shipment Type</label>
               <select [(ngModel)]="shipmentTypeID" class="form-control" id="shipmentType" name="shipmentType" required>
@@ -39,8 +35,6 @@
                 </option>
               </select>
             </div>
-          </div>
-          <div class="row">
             <div class="form-group col-xs-4">
               <label for="broker">Broker</label>
               <select [(ngModel)]="brokerID" class="form-control" id="broker" name="broker" required>
@@ -58,7 +52,7 @@
         </form>
       </div>
     </div>
-    <div class="row">
+    <div class="row containerForm">
       <div class="col-sm">
         <form (ngSubmit)="createContainer()" #containerForm="ngForm" class="form-inline">
           <div class="form-group col-sm">
@@ -66,9 +60,40 @@
             <input [(ngModel)]="containerName" class="form-control" id="containerName" name="containerName" required>
           </div>
           <div class="form-group col-sm">
+            <label for="containerType">Container Type:</label>
+            <select [(ngModel)]="containerType" class="form-control" id="containerType" name="containerType" required>
+              <option>1X20</option>
+              <option>1X40</option>
+              <option>N/A</option>
+            </select>
+          </div>
+          <div class="form-group col-sm">
             <button type="submit" class="btn btn-success" [disabled]="!containerForm.form.valid">Add Container</button>
           </div>
         </form>
+      </div>
+    </div>
+    <div class="row containerDetail">
+      <div *ngIf="selectedContainer" class="col-sm-2">
+        {{selectedContainer.entityID}} is selected
+      </div>
+      <div *ngIf="!selectedContainer" class="col-sm-2">
+        Nothing is selected
+      </div>
+      <div class="col-sm-10">
+        <button (click)="gotoDetail()" [disabled]="!selectedContainer">View Details</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+          <div class="list-group">
+            <button *ngFor="let c of containers" type="button" (click)="onSelect(c)"
+                    class="list-group-item list-group-item-action"
+                    [class.active]="c === selectedContainer" [class.list-group-item-warning]="isWarning(c)">
+              <span class="badge badge-default badge-pill">{{c.entityID}}</span>
+              Container ID: {{c.containerName}} Type: {{c.containerType}}
+            </button>
+          </div>
       </div>
     </div>
   </div> <!-- container -->

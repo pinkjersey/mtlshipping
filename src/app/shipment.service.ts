@@ -8,19 +8,22 @@ import {ServiceBase} from './serviceBase';
 import {Urls} from './urls';
 import {UrlsProd} from './urls.prod';
 import {environment} from '../environments/environment';
+import {Container} from './container-detail/container';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-}
+};
 
 @Injectable()
 export class ShipmentService extends ServiceBase {
   private url = Urls.SHIPMENTS;
+  private containerUrl = Urls.CONTAINERS;
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'ShipmentService');
     if (environment.production) {
       this.url = UrlsProd.SHIPMENTS;
+      this.url = UrlsProd.CONTAINERS;
     }
   }
   getShipment(id: string): Observable<Shipment> {
@@ -43,10 +46,24 @@ export class ShipmentService extends ServiceBase {
       catchError(this.handleError<Shipment>('addShipment'))
     )
   }
+  getShipmentContainers(id: string): Observable<Container[]> {
+    const url = `${this.url}/${id}/containers`;
+    return this.http.get<Container[]>(url)
+      .pipe(
+        tap(containers => this.log(`fetched containers`)),
+        catchError(this.handleError('getShipmentContainers', []))
+      );
+  }
   updateShipment(shipment: Shipment): Observable<Shipment> {
     return this.http.post<Shipment>(this.url, shipment, httpOptions).pipe(
       tap((response: Shipment) => this.log(`updated shipment w/ id=${response.entityID}`)),
       catchError(this.handleError<Shipment>('updateShipment'))
+    );
+  }
+  addContainerToShipment(container: Container): Observable<Container> {
+    return this.http.put<Container>(this.containerUrl, container, httpOptions).pipe(
+      tap((response: Container) => this.log(`added container w/ id=${response.entityID}`)),
+      catchError(this.handleError<Container>('addContainerToShipment'))
     );
   }
 }

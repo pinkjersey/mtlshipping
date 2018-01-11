@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Shipment} from '../shipment/shipment';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ShipmentService} from '../shipment.service';
 import {ShipmentTypeService} from '../shipment-type.service';
 import {ShipmentType} from '../shipment-type/shipment-type';
@@ -9,6 +9,7 @@ import {Vessel} from '../vessel/vessel';
 import {Broker} from '../broker/broker';
 import {VesselService} from '../vessel.service';
 import {BrokerService} from '../broker.service';
+import {Container} from '../container-detail/container';
 
 @Component({
   selector: 'app-shipment-detail',
@@ -24,6 +25,9 @@ export class ShipmentDetailComponent implements AfterViewInit {
   shipmentTypeID: string;
   brokerID: string;
   containerName: string;
+  containerType: string;
+  containers: Container[];
+  selectedContainer: Container;
 
   // static data
   allShipmentTypes: ShipmentType[];
@@ -31,6 +35,7 @@ export class ShipmentDetailComponent implements AfterViewInit {
   allBrokers: Broker[];
 
   constructor(
+    private router: Router,
     private shipmentService: ShipmentService,
     private shipmentTypeService: ShipmentTypeService,
     private vesselService: VesselService,
@@ -46,6 +51,7 @@ export class ShipmentDetailComponent implements AfterViewInit {
       .subscribe(shipment => {
         this.shipment = shipment;
         this.copyShipment(shipment);
+        this.getContainers()
       });
 
     this.getAllShipmentTypes();
@@ -94,7 +100,38 @@ export class ShipmentDetailComponent implements AfterViewInit {
       })
   }
 
+  getContainers(): void {
+    this.shipmentService.getShipmentContainers(this.shipment.entityID)
+      .subscribe(shipmentContainers => {
+        this.containers = shipmentContainers
+      })
+  }
+
   createContainer(): void {
-    console.log('not yet implemented')
+    console.log('Creating container');
+    const container = new Container();
+    container.entityID = ''; // assigned by back end
+    container.containerName = this.containerName;
+    container.containerType = this.containerType;
+    container.shipmentID = this.shipment.entityID;
+    this.shipmentService.addContainerToShipment(container)
+      .subscribe(newContainer => {
+        if (newContainer != null) {
+          this.containers.push(newContainer)
+        }
+      })
+  }
+
+  onSelect(container: Container): void {
+    this.selectedContainer = container;
+  }
+
+  isWarning(container: Container): boolean {
+    // TODO get number of container items here, and return warning if there is <1
+    return false;
+  }
+
+  gotoDetail(): void {
+    this.router.navigate(['/container-detail', this.selectedContainer.entityID])
   }
 }
