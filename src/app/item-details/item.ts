@@ -11,5 +11,6 @@ export class Item {
   ldp: number;
   customerPOID: string;
   millETS: string;
+  containerID: string;
 }
 

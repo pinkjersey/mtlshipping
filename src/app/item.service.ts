@@ -32,6 +32,15 @@ export class ItemService extends ServiceBase {
     );
   }
 
+  getReadyToShipItems(): Observable<Item[]> {
+    const url = `${this.itemsUrl}?search=readyToShip`;
+    return this.http.get<Item[]>(url)
+      .pipe(
+        tap(items => this.log(`fetched ready to ship items`)),
+        catchError(this.handleError('getReadyToShipItems', []))
+      );
+  }
+
   updateItem(item: Item): Observable<Item> {
     return this.http.post<Item>(this.itemsUrl, item, httpOptions).pipe(
       tap((response: Item) => this.log(`updated item w/ id=${response.entityID}`)),

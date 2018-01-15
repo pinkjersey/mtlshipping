@@ -25,8 +25,6 @@ export class OurPurchaseOrderDetailComponent extends ItemDisplayer implements On
   unassignedItems: Item[];
   selectedItem: string;
   selectedAddedItem: Item;
-  // allCustomers: Customer[];
-  // allPOs: PurchaseOrder[]; // used to get the customer
   FOB: number;
   poDate: string;
   warnItem = OurPurchaseOrderDetailComponent.warnItem;

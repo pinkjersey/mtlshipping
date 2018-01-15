@@ -42,6 +42,7 @@ import {LoginService} from './login.service';
 import {TokenInterceptor} from './token.interceptor';
 import {AuthService} from './auth.service';
 import { ContainerDetailComponent } from './container-detail/container-detail.component';
+import {ContainerService} from './container.service';
 
 @NgModule({
   declarations: [
@@ -158,7 +159,7 @@ import { ContainerDetailComponent } from './container-detail/container-detail.co
   ],
   providers: [CustomerService, MessageService, BrokerService, VendorService,
   DesignService, PurchaseOrderService, ItemService, VesselService, ShipmentTypeService,
-  ShipmentService, LoginService, AuthService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
+  ShipmentService, ContainerService, LoginService, AuthService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

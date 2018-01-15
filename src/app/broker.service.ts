@@ -27,7 +27,7 @@ export class BrokerService extends ServiceBase {
   getBrokers(): Observable<Broker[]> {
     return this.http.get<Broker[]>(this.url)
       .pipe(
-        tap(heroes => this.log(`fetched brokers`)),
+        tap(brokers => this.log(`fetched brokers`)),
         catchError(this.handleError('getBrokers', []))
       );
   }

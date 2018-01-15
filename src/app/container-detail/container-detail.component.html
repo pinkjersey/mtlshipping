@@ -1,3 +1,62 @@
-<p>
-  container-detail works!
-</p>
+<div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <h2 *ngIf="container">Container {{container.containerName}}</h2>
+      </div>
+    </div>
+    <div class="row"> <!-- container details form -->
+      <div class="col-sm">
+        <form (ngSubmit)="updateContainer()" #containerForm="ngForm">
+          <div class="row">
+            <div class="form-group col-xs-4">
+              <label for="containerType">Type</label>
+              <select [(ngModel)]="containerType" class="form-control" id="containerType" name="containerType" required>
+                <option>1X20</option>
+                <option>1X40</option>
+                <option>N/A</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-xs-4">
+              <button type="submit" class="btn btn-success" [disabled]="!containerForm.form.valid || containerForm.form.pristine">Update</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div> <!-- end container details -->
+    <div class="row containerForm"> <!-- item form -->
+      <div class="col-sm">
+        <form *ngIf="readyToShipItems" (ngSubmit)="addItem()" #itemForm="ngForm" class="form-inline">
+          <div class="row">
+            <div class="form-group col-xs-6">
+              <label for="readyToShipItem">Items Ready To Ship</label>
+              <select [(ngModel)]="readyToShipItem" class="form-control" id="readyToShipItem" name="readyToShipItem" required>
+                <option *ngFor="let item of readyToShipItems" [value]="item.entityID">
+                  {{item.designColorID | parentDescription: "DesignColor":"designID":allColors:designs}},
+                  {{item.designColorID | description:"DesignColor":allColors}}, {{item.orderedYards}} yards at {{item.ldp}} cents
+                </option>
+              </select>
+            </div>
+            <div class="form-group col-xs-6">
+              <button type="submit" class="btn btn-success" [disabled]="!itemForm.form.valid">Add</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row"> <!-- container items -->
+      <div class="col-sm">
+        <div class="list-group">
+          <button *ngFor="let item of items" type="button"
+                  class="list-group-item list-group-item-action">
+            <span class="badge badge-default badge-pill">{{item.entityID}}</span>
+            {{item.designColorID | parentDescription: "DesignColor":"designID":allColors:designs}},
+            {{item.designColorID | description:"DesignColor":allColors}}, {{item.orderedYards}} yards at {{item.ldp}} cents
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
