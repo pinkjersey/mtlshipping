@@ -23,7 +23,7 @@ export class ShipmentService extends ServiceBase {
     super(messageService, 'ShipmentService');
     if (environment.production) {
       this.url = UrlsProd.SHIPMENTS;
-      this.url = UrlsProd.CONTAINERS;
+      this.containerUrl = UrlsProd.CONTAINERS;
     }
   }
   getShipment(id: string): Observable<Shipment> {

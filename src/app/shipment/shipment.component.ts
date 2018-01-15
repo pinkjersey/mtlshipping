@@ -116,6 +116,7 @@ export class ShipmentComponent implements OnInit {
     shipment.vesselID = this.vessel;
     shipment.status = 'S'; // shipped
 
+    console.log('calling addShipment');
     this.shipmentService.addShipment(shipment)
       .subscribe(retItem => {
         this.shipments.push(retItem);
