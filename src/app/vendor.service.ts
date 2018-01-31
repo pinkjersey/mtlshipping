@@ -8,7 +8,7 @@ import {ServiceBase} from './serviceBase';
 import {OurPurchaseOrder} from './our-purchase-order-detail/ourPurchaseOrder';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Item} from './item-details/item';
-import {VendorInvoice} from './our-pos/vendor-invoice';
+import {VendorInvoice} from './vendor-invoice-detail/vendor-invoice';
 import {Urls} from './urls';
 import {UrlsProd} from './urls.prod';
 import {environment} from '../environments/environment';

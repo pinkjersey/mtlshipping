@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {VendorInvoice} from '../our-pos/vendor-invoice';
+import {VendorInvoice} from './vendor-invoice';
 import {Vendor} from '../vendor/vendor';
 import {Item} from '../item-details/item';
 import {ItemDisplayer} from '../item-displayer';

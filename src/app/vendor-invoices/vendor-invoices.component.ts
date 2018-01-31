@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Vendor} from '../vendor/vendor';
 import {VendorService} from '../vendor.service';
 import {Router} from '@angular/router';
-import {VendorInvoice} from '../our-pos/vendor-invoice';
+import {VendorInvoice} from '../vendor-invoice-detail/vendor-invoice';
 import {PurchaseOrder} from "../purchase-order-detail/purchaseOrder";
 
 @Component({

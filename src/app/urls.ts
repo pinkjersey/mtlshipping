@@ -1,3 +1,5 @@
+import {UrlsProd} from "./urls.prod";
+
 export class Urls {
   private static readonly BASEURL = 'http://localhost:8080';
   public static readonly BROKERS = Urls.BASEURL + '/brokers';
@@ -14,4 +16,5 @@ export class Urls {
   public static readonly CUSTOMERS = Urls.BASEURL + '/customers';
   public static readonly LOGIN = Urls.BASEURL + '/login';
   public static readonly CONTAINERS = Urls.BASEURL + '/containers';
+  public static readonly OURINVOICES = Urls.BASEURL + '/ourInvoices';
 }

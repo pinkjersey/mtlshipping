@@ -31,7 +31,7 @@ export class ShipmentComponent implements OnInit {
   shipments: Shipment[];
   isWarning = ShipmentComponent.isWarning;
   isDanger = ShipmentComponent.isDanger;
-  isSuccesful = ShipmentComponent.isSuccessful;
+  isSuccessful = ShipmentComponent.isSuccessful;
 
   static isWarning(shipment: Shipment): boolean {
     return ShipmentComponent.deteremineType(shipment, Type.WARNING)

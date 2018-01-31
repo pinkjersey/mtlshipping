@@ -12,6 +12,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Urls} from './urls';
 import {UrlsProd} from './urls.prod';
 import {environment} from '../environments/environment';
+import {OurInvoice} from "./our-invoices/ourInvoice";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -23,12 +24,14 @@ export class CustomerService extends ServiceBase {
   public customerStream = this.customer.asObservable();
   private customerUrl = Urls.CUSTOMERS;
   private urlForPurchaseOrders = Urls.PURCHASEORDERS;
+  private urlForOurInvoices = Urls.OURINVOICES;
   constructor(private http: HttpClient,
               messageService: MessageService) {
     super(messageService, 'CustomerService');
     if (environment.production) {
       this.customerUrl = UrlsProd.CUSTOMERS;
       this.urlForPurchaseOrders = UrlsProd.PURCHASEORDERS;
+      this.urlForOurInvoices = UrlsProd.OURINVOICES;
     }
   }
 
@@ -41,7 +44,7 @@ export class CustomerService extends ServiceBase {
   getCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.customerUrl)
       .pipe(
-        tap(heroes => this.log(`fetched customers`)),
+        tap(c => this.log(`fetched customers`)),
         catchError(this.handleError('getCustomers', []))
       );
   }
@@ -54,6 +57,16 @@ export class CustomerService extends ServiceBase {
         catchError(this.handleError('getCustomerPOs', []))
       );
   }
+
+  getCustomerOurInvoices(id: string): Observable<OurInvoice[]> {
+    const url = `${this.customerUrl}/${id}/invoices`;
+    return this.http.get<OurInvoice[]>(url)
+      .pipe(
+        tap(designColors => this.log(`fetched customer invoices`)),
+        catchError(this.handleError('getCustomerOurInvoices', []))
+      );
+  }
+
   /** GET customer by id. Will 404 if id not found */
   getCustomer(id: string): Observable<Customer> {
     const url = `${this.customerUrl}/${id}`;
@@ -73,6 +86,13 @@ export class CustomerService extends ServiceBase {
     return this.http.post<PurchaseOrder>(this.urlForPurchaseOrders, po, httpOptions).pipe(
       tap((response: PurchaseOrder) => this.log(`added po  w/ id=${response.entityID}`)),
       catchError(this.handleError<PurchaseOrder>('addPurchaseOrder'))
+    );
+  }
+
+  addInvoice(inv: OurInvoice): Observable<OurInvoice> {
+    return this.http.put<OurInvoice>(this.urlForOurInvoices, inv, httpOptions).pipe(
+      tap((response: OurInvoice) => this.log(`added inv w/ id=${response.entityID}`)),
+      catchError(this.handleError<OurInvoice>('addInvoice'))
     );
   }
 }

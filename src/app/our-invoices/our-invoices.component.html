@@ -1,3 +1,68 @@
-<p>
-  our-invoices works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h3>Our Invoices</h3>
+    </div>
+  </div>
+  <div class="row invoiceForm">
+    <form (ngSubmit)="addInvoice()" #newInvoiceForm="ngForm" class="form-inline">
+      <div class="form-group col-sm">
+        <label for="invoiceID">Invoice ID:</label>
+        <input type="text" [(ngModel)]="invoiceID" class="form-control" id="invoiceID" name="invoiceID" required>
+      </div>
+      <div class="form-group col-sm">
+        <button type="submit" class="btn btn-success" [disabled]="!newInvoiceForm.form.valid">Create</button>
+      </div>
+    </form>
+  </div>
+  <div class="row invoiceDetail">
+    <div *ngIf="selectedInvoice" class="col-sm-2">
+      {{selectedInvoice.entityID}} is selected
+    </div>
+    <div *ngIf="!selectedInvoice" class="col-sm-2">
+      Nothing is selected
+    </div>
+    <div class="col-sm-10">
+      <button (click)="gotoDetail()" [disabled]="!selectedInvoice">View Details</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <div class="list-group">
+        <button *ngFor="let invoice of invoices" type="button" (click)="onSelect(invoice)"
+                class="list-group-item list-group-item-action"
+                [class.active]="invoice === selectedInvoice" [class.list-group-item-warning]="isWarning(invoice)"
+                [class.list-group-item-danger]="isDanger(invoice)"
+                [class.list-group-item-success]="isSuccessful(invoice)">
+          <span class="badge badge-default badge-pill">{{invoice.entityID}}</span>
+          ID: {{invoice.invoiceID}}
+        </button>
+      </div>
+  </div>
+</div>
+
+<!--
+<div>
+  <h2>Our Invoice</h2>
+  <div>
+    <label>Invoice ID:
+      <input #invoiceID />
+    </label>
+    <button (click)="addOurInvoice(invoiceID.value); invoiceID.value=''">
+      add
+    </button>
+  </div>
+  <ul class="POs">
+    <li *ngFor="let invoice of ourInvoices" (click)="onSelect(invoice)" [class.selected]="invoice === selectedInvoice">
+      <span class="badge">{{invoice.entityID}}</span> {{invoice.invoiceID}}
+    </li>
+  </ul>
+  <div *ngIf="selectedInvoice">
+    <h2>
+      {{selectedInvoice.invoiceID}} is selected
+    </h2>
+    <button (click)="gotoDetail()">View Details</button>
+  </div>
+</div>
+
+-->

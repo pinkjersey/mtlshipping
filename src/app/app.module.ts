@@ -43,6 +43,7 @@ import {TokenInterceptor} from './token.interceptor';
 import {AuthService} from './auth.service';
 import { ContainerDetailComponent } from './container-detail/container-detail.component';
 import {ContainerService} from './container.service';
+import { OurInvoiceDetailComponent } from './our-invoice-detail/our-invoice-detail.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import {ContainerService} from './container.service';
     ShipmentTypeComponent,
     ShipmentDetailComponent,
     LoginComponent,
-    ContainerDetailComponent
+    ContainerDetailComponent,
+    OurInvoiceDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -105,7 +107,8 @@ import {ContainerService} from './container.service';
           { path: '', redirectTo: 'POs', pathMatch: 'full' },
           { path: 'POs', component: PosComponent },
           { path: 'ourInvoices', component: OurInvoicesComponent },
-          { path: 'purchase-order-detail/:id', component: PurchaseOrderDetailComponent }
+          { path: 'purchase-order-detail/:id', component: PurchaseOrderDetailComponent },
+          { path: 'our-invoice-detail/:id', component: OurInvoiceDetailComponent },
         ]
       },
       {
